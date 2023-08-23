@@ -1,13 +1,13 @@
-Header header
+std_msgs/Header header
 
 bool connect
-int8 CH1
-int8 CH2
-int8 CH3
-int8 CH4
-int8 CH5
-int8 CH6
-int8 CH7
-int8 CH8
-int8 CH9
-int8 CH10
+int8 ch1
+int8 ch2
+int8 ch3
+int8 ch4
+int8 ch5
+int8 ch6
+int8 ch7
+int8 ch8
+int8 ch9
+int8 ch10
