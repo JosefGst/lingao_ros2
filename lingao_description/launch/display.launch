@@ -1,0 +1,11 @@
+<launch>
+
+  <!-- LingAo description -->
+  <include file="$(find lingao_description)/launch/description.launch">
+      <arg name="chassis_model"   value="LINGAO_MODEL MiniUGV-20A"/>
+  </include>
+
+  <!-- 运行rviz可视化界面 -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find lingao_description)/urdf.rviz" required="true" />
+  
+</launch>
