@@ -115,3 +115,8 @@
 
 * 问：如何下载驱动包？  
     答：使用GIT方式拉取即可：`git clone https://e.coding.net/keaa/lingaoros/lingao_ros.git`
+
+# ROS 2
+## description
+
+    ros2 launch urdf_launch display.launch.py urdf_package:=lingao_description_ros2 urdf_package_path:=urdf/MiniUGV_10A.xacro
