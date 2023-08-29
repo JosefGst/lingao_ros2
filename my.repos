@@ -1,0 +1,5 @@
+repositories:
+  urdf_launch:
+    type: git
+    url: git@github.com:MetroRobots/urdf_launch.git
+    version: main

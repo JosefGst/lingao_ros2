@@ -117,6 +117,16 @@
     答：使用GIT方式拉取即可：`git clone https://e.coding.net/keaa/lingaoros/lingao_ros.git`
 
 # ROS 2
+
+## installation
+
+    cd lingao_ros2
+    sudo apt install python3-vcstool
+    vcs import .. < my.repos
+
+and build the workspace.
 ## description
 
     ros2 launch urdf_launch display.launch.py urdf_package:=lingao_description urdf_package_path:=urdf/MiniUGV_10A.xacro
+
+![urdf](https://github.com/JosefGst/lingao_ros2/blob/master/images/urdf.png)
