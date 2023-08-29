@@ -120,6 +120,7 @@
 
 ## installation
 
+    sudo apt install libboost-all-dev
     cd lingao_ros2
     sudo apt install python3-vcstool
     vcs import .. < my.repos
@@ -128,5 +129,9 @@ and build the workspace.
 ## description
 
     ros2 launch urdf_launch display.launch.py urdf_package:=lingao_description urdf_package_path:=urdf/MiniUGV_10A.xacro
+
+For Gazebo simulation
+
+    ros2 launch lingao_description gazebo_launch.py
 
 ![urdf](https://github.com/JosefGst/lingao_ros2/blob/master/images/urdf.png)

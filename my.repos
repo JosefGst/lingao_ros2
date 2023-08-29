@@ -1,4 +1,12 @@
 repositories:
+  lingao_ros2:
+    type: git
+    url: git@github.com:JosefGst/lingao_ros2.git
+    version: master
+  urdf_basic_shapes:
+    type: git
+    url: git@github.com:JosefGst/urdf_basic_shapes.git
+    version: humble-devel
   urdf_launch:
     type: git
     url: git@github.com:MetroRobots/urdf_launch.git
