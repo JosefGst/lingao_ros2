@@ -119,4 +119,4 @@
 # ROS 2
 ## description
 
-    ros2 launch urdf_launch display.launch.py urdf_package:=lingao_description_ros2 urdf_package_path:=urdf/MiniUGV_10A.xacro
+    ros2 launch urdf_launch display.launch.py urdf_package:=lingao_description urdf_package_path:=urdf/MiniUGV_10A.xacro

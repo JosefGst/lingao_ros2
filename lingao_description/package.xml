@@ -1,21 +1,20 @@
-<?xml version="1.0.0"?>
-    <package>
-    <name>lingao_description</name>
-    <version>1.4.1</version>
-    <description>The lingao_description package</description>
-    <maintainer email="keaa@keaa.net">keaa</maintainer>
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>lingao_description</name>
+  <version>0.0.0</version>
+  <description>TODO: Package description</description>
+  <maintainer email="josefgstoettner@live.at">ubuntu</maintainer>
+  <license>TODO: License declaration</license>
 
-    <license>BSD</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>xacro</depend>
+  <depend>joint_state_publisher</depend>
 
-    <buildtool_depend>catkin</buildtool_depend>
-    <build_depend>urdf</build_depend>
-    <build_depend>xacro</build_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
 
-    <run_depend>urdf</run_depend>
-    <run_depend>xacro</run_depend>
-    <run_depend>kobuki_description</run_depend>
-    <run_depend>create_description</run_depend>
-
-    <export>
-    </export>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
 </package>
