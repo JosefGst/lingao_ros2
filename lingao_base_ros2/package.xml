@@ -20,6 +20,7 @@
   <depend>geometry_msgs</depend>
   <depend>imu-filter-madgwick</depend>
   <depend>libboost-dev</depend>
+  <depend>std_msgs</depend>
 
   <export>
     <build_type>ament_cmake</build_type>

@@ -9,14 +9,12 @@
  * @FilePath /lingao_ws/src/lingaoRobot/lingao_ros/lingao_base/src/lingao_base_node.cpp
  */
 
-#include "base_driver.h"
+#include "lingao_base_ros2/base_driver.hpp"
 
-int main(int argc, char** argv )
+int main(int argc, char *argv[])
 {
-    ros::init(argc, argv, "lingao_base_driver");
-
-    Base_Driver base_driver;
-    base_driver.base_Loop();
-
+    rclcpp::init(argc, argv);
+    rclcpp::spin(std::make_shared<MinimalPublisher>());
+    rclcpp::shutdown();
     return 0;
 }
