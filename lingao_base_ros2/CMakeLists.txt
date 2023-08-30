@@ -18,7 +18,13 @@ find_package(std_msgs REQUIRED)
 
 include_directories(include)
 
-add_executable(lingao_base_node src/lingao_base_node.cpp src/base_driver)
+add_executable(lingao_base_node src/lingao_base_node.cpp 
+src/base_driver.cpp
+# src/Serial_Async.cpp
+# src/data_stream.cpp
+# src/TCP_Async.cpp
+# src/UDP_Async.cpp
+)
 ament_target_dependencies(lingao_base_node rclcpp tf2 tf2_ros nav_msgs lingao_msgs geometry_msgs sensor_msgs std_msgs)
 
 

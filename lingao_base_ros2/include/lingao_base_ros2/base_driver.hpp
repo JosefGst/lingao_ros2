@@ -4,21 +4,65 @@
 #include <chrono>
 #include <functional>
 #include <memory>
+#include <stdio.h>
 #include <string>
+#include "lingao_base_ros2/data_format.h"
+#include <boost/shared_ptr.hpp>
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
-class MinimalPublisher : public rclcpp::Node
+using namespace std;
+class Data_Stream;
+class Serial_Async;
+class TCP_Async;
+class UDP_Async;
+
+class BaseDriver : public rclcpp::Node
 {
 public:
-    MinimalPublisher();
+    BaseDriver();
 
 private:
+    void InitParams();
     void timer_callback();
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
     size_t count_;
+
+    // Boost
+    // boost::shared_ptr<TCP_Async> tcp;
+    // boost::shared_ptr<UDP_Async> udp;
+    // boost::shared_ptr<Serial_Async> serial;
+    // Data_Stream *stream;
+
+    // serial port
+    std::string serial_port_;
+    int serial_baud_rate;
+    bool active;
+
+    // odom
+    std::string publish_odom_name_;
+    std::string odom_frame_id_;
+    std::string base_frame_id_;
+    int loop_rate_;
+    bool publish_odom_transform_;
+
+    // Update speed to board
+    std::string topic_cmd_vel_name_;
+    double cmd_vel_sub_timeout_vel_;
+
+    // CALIB
+    double linear_scale_;
+    double angular_scale_;
+
+    // IMU
+    std::string topic_imu_;
+    std::string imu_frame_id_;
+    bool use_imu_;
+    bool imuStreamActive;
+    bool imu_calibrate_gyro_;
+    int imu_calib_samples_;
 };
 
 #endif // BASE_DRIVER_H
