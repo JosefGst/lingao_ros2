@@ -16,7 +16,39 @@
 
 Serial_Async::Serial_Async() : Node("Serial_Async")
 {
-    std::string some_string = "hiya";
+
+#if BOOST_VERSION >= 107000
+    io_sev_ = boost::make_shared<boost::asio::io_context>();
+#else
+    io_sev_ = boost::make_shared<boost::asio::io_service>();
+#endif
+    //  serial_port_ = "/dev/lingao";
+    //
+}
+
+Serial_Async::~Serial_Async()
+{
+    if (isOpen_)
+    {
+        try
+        {
+            doClose();
+        }
+        catch (...)
+        {
+        }
+    }
+}
+
+void Serial_Async::doClose()
+{
+    if (isOpen_)
+    {
+        isOpen_ = false;
+        //        boost::system::error_code ec;
+        port_->cancel();
+        port_->close();
+    }
 }
 
 void Serial_Async::DoSomething()

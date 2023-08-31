@@ -21,7 +21,6 @@ BaseDriver::BaseDriver()
 
     serial = boost::make_shared<Serial_Async>();
     serial->DoSomething();
-    // serial = boost::make_shared<Serial_Async>();
     // stream = new Data_Stream(serial.get());
 
     publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
