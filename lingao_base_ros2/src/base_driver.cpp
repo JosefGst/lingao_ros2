@@ -1,15 +1,26 @@
 
 #include "lingao_base_ros2/base_driver.hpp"
-#include "lingao_base_ros2/data_stream.h"
-#include "lingao_base_ros2/Serial_Async.h"
-#include "lingao_base_ros2/TCP_Async.h"
-#include "lingao_base_ros2/UDP_Async.h"
+#include "lingao_base_ros2/data_stream.hpp"
+#include "lingao_base_ros2/Serial_Async.hpp"
+// #include "lingao_base_ros2/TCP_Async.hpp"
+// #include "lingao_base_ros2/UDP_Async.hpp"
+#include "lingao_base_ros2/myObject.hpp"
 
 BaseDriver::BaseDriver()
     : Node("lingao_base_driver"), count_(0)
 {
     InitParams();
+    // learning boost shared ptr
+    boost::shared_ptr<std::string> x = boost::make_shared<std::string>("hello, world!");
+    std::cout << *x;
+    RCLCPP_INFO_STREAM(this->get_logger(), "Init: " << *x);
 
+    // learning my object
+    myObject = boost::make_shared<MyClass>();
+    myObject->DoSomething();
+
+    serial = boost::make_shared<Serial_Async>();
+    serial->DoSomething();
     // serial = boost::make_shared<Serial_Async>();
     // stream = new Data_Stream(serial.get());
 

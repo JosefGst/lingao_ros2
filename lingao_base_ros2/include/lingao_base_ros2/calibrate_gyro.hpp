@@ -5,7 +5,7 @@
  * @Date 2022-01-23 14:34:08
  * @LastEditTime: 2022-01-23 15:14:38
  * @LastEditors: owen
- * @Description 
+ * @Description
  * @FilePath: /lingao_ws/src/lingaoRobot/lingao_ros/lingao_base/include/calibrate_gyro.h
  */
 #ifndef LINGAO_CALIBRATE_GYRO_H
@@ -55,7 +55,7 @@ public:
                 RCLCPP_INFO(this->get_logger(), "Gyro calibration complete! (bias = [%.3f, %.3f, %.3f])", gyro_bias_x_, gyro_bias_y_, gyro_bias_z_);
                 first_calib_ = false;
             }
-            
+
             calib_x = 0;
             calib_y = 0;
             calib_z = 0;
@@ -69,7 +69,6 @@ public:
 
         return true;
     }
-
 };
 
 #endif

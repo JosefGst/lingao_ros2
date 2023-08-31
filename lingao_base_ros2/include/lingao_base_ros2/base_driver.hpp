@@ -6,7 +6,7 @@
 #include <memory>
 #include <stdio.h>
 #include <string>
-#include "lingao_base_ros2/data_format.h"
+#include "lingao_base_ros2/data_format.hpp"
 #include <boost/shared_ptr.hpp>
 
 #include "rclcpp/rclcpp.hpp"
@@ -17,6 +17,7 @@ class Data_Stream;
 class Serial_Async;
 class TCP_Async;
 class UDP_Async;
+class MyClass;
 
 class BaseDriver : public rclcpp::Node
 {
@@ -31,10 +32,12 @@ private:
     size_t count_;
 
     // Boost
-    // boost::shared_ptr<TCP_Async> tcp;
-    // boost::shared_ptr<UDP_Async> udp;
-    // boost::shared_ptr<Serial_Async> serial;
-    // Data_Stream *stream;
+    boost::shared_ptr<TCP_Async> tcp;
+    boost::shared_ptr<UDP_Async> udp;
+    boost::shared_ptr<Serial_Async> serial;
+    Data_Stream *stream;
+
+    boost::shared_ptr<MyClass> myObject;
 
     // serial port
     std::string serial_port_;

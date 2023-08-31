@@ -15,39 +15,62 @@ find_package(geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(Boost REQUIRED COMPONENTS program_options regex )
+include_directories( ${Boost_INCLUDE_DIRS} )
 
 include_directories(include)
 
 add_executable(lingao_base_node src/lingao_base_node.cpp 
-src/base_driver.cpp
-# src/Serial_Async.cpp
-# src/data_stream.cpp
+  src/base_driver.cpp
+  src/myObject.cpp
+  src/Serial_Async.cpp
+  # src/data_stream.cpp
 # src/TCP_Async.cpp
 # src/UDP_Async.cpp
 )
 ament_target_dependencies(lingao_base_node rclcpp tf2 tf2_ros nav_msgs lingao_msgs geometry_msgs sensor_msgs std_msgs)
 
+# add_library(data_stream src/data_stream.cpp
+#   
+#   # src/base_driver.cpp
+#   # src/Serial_Async.cpp
+#   # src/TCP_Async.cpp
+#   # src/UDP_Async.cpp
+# )
+# ament_target_dependencies(data_stream rclcpp std_msgs)
+
+# Install our headers
+install(
+  DIRECTORY include/lingao_base_ros2
+  DESTINATION include
+)
+
+# Install our node
+install(TARGETS
+  lingao_base_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+# Install library
+# install(
+#   TARGETS data_stream
+#   EXPORT data_stream
+#   LIBRARY DESTINATION lib
+#   ARCHIVE DESTINATION lib
+#   RUNTIME DESTINATION bin
+#   INCLUDES DESTINATION include
+# )
 
 install(DIRECTORY
   launch
   DESTINATION share/${PROJECT_NAME}/
 )
 
-install(TARGETS
-  lingao_base_node
-  DESTINATION lib/${PROJECT_NAME}
-)
 
 
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
-  # the following line skips the linter which checks for copyrights
-  # comment the line when a copyright and license is added to all source files
   set(ament_cmake_copyright_FOUND TRUE)
-  # the following line skips cpplint (only works in a git repo)
-  # comment the line when this package is in a git repo and when
-  # a copyright and license is added to all source files
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
