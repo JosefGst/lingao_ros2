@@ -20,9 +20,31 @@ BaseDriver::BaseDriver()
     myObject->DoSomething();
 
     serial = boost::make_shared<Serial_Async>();
-    serial->DoSomething();
-    // serial = boost::make_shared<Serial_Async>();
-    // stream = new Data_Stream(serial.get());
+    stream = new Data_Stream(serial.get());
+
+    if (serial->init(serial_port_, serial_baud_rate))
+    {
+        RCLCPP_INFO(this->get_logger(), "Main board Serial Port open success, com_port_name= '%s'", serial_port_.c_str());
+    }
+    else
+    {
+        RCLCPP_INFO(this->get_logger(), "Main board Serial Port open failed... com_port_name= '%s'", serial_port_.c_str());
+        return;
+    }
+
+    if (stream->version_detection())
+    {
+        Data_Format_VER version = stream->get_data_version();
+        RCLCPP_INFO(this->get_logger(), "The version matches successfully, current version: [ %d ]", (int)version.protoVer);
+        RCLCPP_INFO(this->get_logger(), "GET Equipment Identity: %d", version.equipmentIdentity);
+    }
+    else
+    {
+        Data_Format_VER version = stream->get_data_version();
+        RCLCPP_INFO(this->get_logger(), "GET Equipment Identity: %d", version.equipmentIdentity);
+        RCLCPP_INFO(this->get_logger(), "The driver version does not match,  Main control board driver version:[ %d ] Current driver version:[ %d ]", (int)version.protoVer, LA_PROTO_VER_0310 );
+        return;
+    }
 
     publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
     timer_ = this->create_wall_timer(
