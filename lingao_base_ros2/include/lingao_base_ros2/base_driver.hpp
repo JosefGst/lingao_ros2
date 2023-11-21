@@ -11,6 +11,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
+#include <sensor_msgs/msg/imu.hpp>
 
 using namespace std;
 class Data_Stream;
@@ -60,12 +61,18 @@ private:
     double angular_scale_;
 
     // IMU
+    rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr imu_publisher_;
+    sensor_msgs::msg::Imu imu_msg;
     std::string topic_imu_;
     std::string imu_frame_id_;
+    Data_Format_IMU imu_data;
     bool use_imu_;
     bool imuStreamActive;
     bool imu_calibrate_gyro_;
     int imu_calib_samples_;
+    void init_imu();
+    void publish_imu();
+
 };
 
 #endif // BASE_DRIVER_H
