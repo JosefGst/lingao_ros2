@@ -43,7 +43,7 @@ public:
     {
         if (first_calib_)
         {
-            RCLCPP_INFO(this->get_logger(), "Calibrating IMU Gyros; Do not move the IMU");
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Calibrating IMU Gyros; Do not move the IMU");
             // recursively compute mean gyro measurements
             sample_count_++;
             gyro_bias_x_ = ((sample_count_ - 1) * gyro_bias_x_ + raw_angx) / sample_count_;
@@ -52,7 +52,7 @@ public:
 
             if (sample_count_ >= samples_)
             {
-                RCLCPP_INFO(this->get_logger(), "Gyro calibration complete! (bias = [%.3f, %.3f, %.3f])", gyro_bias_x_, gyro_bias_y_, gyro_bias_z_);
+                RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Gyro calibration complete! (bias = [%.3f, %.3f, %.3f])", gyro_bias_x_, gyro_bias_y_, gyro_bias_z_);
                 first_calib_ = false;
             }
 

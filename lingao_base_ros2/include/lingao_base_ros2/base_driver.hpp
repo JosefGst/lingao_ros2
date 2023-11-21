@@ -12,6 +12,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 #include <sensor_msgs/msg/imu.hpp>
+#include "tf2/LinearMath/Quaternion.h"
 
 using namespace std;
 class Data_Stream;

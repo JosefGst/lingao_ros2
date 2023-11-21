@@ -4,6 +4,7 @@
 #include "lingao_base_ros2/Serial_Async.hpp"
 // #include "lingao_base_ros2/TCP_Async.hpp"
 // #include "lingao_base_ros2/UDP_Async.hpp"
+#include "lingao_base_ros2/calibrate_gyro.hpp"
 #include "lingao_base_ros2/myObject.hpp"
 
 BaseDriver::BaseDriver()
@@ -50,7 +51,7 @@ BaseDriver::BaseDriver()
 
     // publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
     timer_ = this->create_wall_timer(
-        std::chrono::seconds(1), std::bind(&BaseDriver::timer_callback, this));
+        std::chrono::microseconds(100), std::bind(&BaseDriver::timer_callback, this));
 }
 
 void BaseDriver::timer_callback()
@@ -161,14 +162,14 @@ void BaseDriver::publish_imu()
 
     if (imu_calibrate_gyro_)
     {
-        // static calibrate_gyro calibGyro(imu_cailb_samples_);
-        // bool isCailb = calibGyro.calib(imu_data.angx, imu_data.angy, imu_data.angz);
-        // if (isCailb == false)
-        //     return;
+        static calibrate_gyro calibGyro(imu_calib_samples_);
+        bool isCailb = calibGyro.calib(imu_data.angx, imu_data.angy, imu_data.angz);
+        if (isCailb == false)
+            return;
 
-        // imu_msg.angular_velocity.x = calibGyro.calib_x;
-        // imu_msg.angular_velocity.y = calibGyro.calib_y;
-        // imu_msg.angular_velocity.z = calibGyro.calib_z;
+        imu_msg.angular_velocity.x = calibGyro.calib_x;
+        imu_msg.angular_velocity.y = calibGyro.calib_y;
+        imu_msg.angular_velocity.z = calibGyro.calib_z;
     }
     else
     {
@@ -177,9 +178,11 @@ void BaseDriver::publish_imu()
         imu_msg.angular_velocity.z = imu_data.angz;
     }
 
-    // tf2::Quaternion goal_quat;
-    // goal_quat.setRPY(imu_data.roll, imu_data.pitch, imu_data.yaw);
-    // imu_msg.orientation = tf2::toMsg(goal_quat);
-
+    tf2::Quaternion goal_quat;
+    goal_quat.setRPY(imu_data.roll, imu_data.pitch, imu_data.yaw);
+    imu_msg.orientation.x = goal_quat.x();
+    imu_msg.orientation.y = goal_quat.y();
+    imu_msg.orientation.z = goal_quat.z();
+    imu_msg.orientation.w = goal_quat.w();
     imu_publisher_->publish(imu_msg);
 }
