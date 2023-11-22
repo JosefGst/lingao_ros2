@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(lingao_bringup)
+project(lingao_bringup_original)
 
 ##################
 ## Dependencies ##

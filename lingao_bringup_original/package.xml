@@ -1,6 +1,6 @@
 <?xml version="1.0.0"?>
     <package>
-    <name>lingao_bringup</name>
+    <name>lingao_bringup_original</name>
     <version>1.0.0</version>
     <description>The lingao bringup package</description>
     <maintainer email="keaa@keaa.net">owen</maintainer>
