@@ -101,7 +101,6 @@ void BaseDriver::MainTimerCallback()
             if (isRead)
             {
                 rxData_rc = stream->get_data_rc();
-                
 
                 rc_msg.header.stamp = BaseDriver::get_clock()->now();
                 rc_msg.connect = rxData_rc.connect;
@@ -156,6 +155,13 @@ void BaseDriver::MainTimerCallback()
     else
         RCLCPP_WARN(this->get_logger(), "Get VELOCITY Data Time Out!");
 
+    //  更新速度消息
+    if (true)
+    {
+        static Data_Format_Liner linertx;
+        linertx.EndianSwapSet(&liner_tx_);
+        stream->update_liner_speed(linertx);
+    }
 }
 
 void BaseDriver::InitParams()
@@ -324,7 +330,7 @@ void BaseDriver::publish_odom()
 
     tf2::Quaternion odom_quat;
 
-    //计算机器人在四元数角下的航向，ROS具有计算四元数角偏航的功能
+    // 计算机器人在四元数角下的航向，ROS具有计算四元数角偏航的功能
     odom_quat.setRPY(0, 0, th_);
 
     // 发布TF
@@ -342,28 +348,28 @@ void BaseDriver::publish_odom()
         odom_tf.transform.rotation.w = odom_quat.w();
 
         odom_tf.header.stamp = current_time;
-        //使用odom_trans对象发布机器人的tf
+        // 使用odom_trans对象发布机器人的tf
         odom_broadcaster_->sendTransform(odom_tf);
     }
 
-    //发布里程计消息
-    odom_msg.header.stamp         = current_time;
+    // 发布里程计消息
+    odom_msg.header.stamp = current_time;
     odom_msg.pose.pose.position.x = x_pos_;
     odom_msg.pose.pose.position.y = y_pos_;
     odom_msg.pose.pose.position.z = 0.0;
 
-    //四元数机器人的航向
+    // 四元数机器人的航向
     odom_msg.pose.pose.orientation.x = odom_quat.x();
     odom_msg.pose.pose.orientation.y = odom_quat.y();
     odom_msg.pose.pose.orientation.z = odom_quat.z();
     odom_msg.pose.pose.orientation.w = odom_quat.w();
 
-    //编码器的线速度
+    // 编码器的线速度
     odom_msg.twist.twist.linear.x = liner_rx_.v_liner_x * linear_scale_;
     odom_msg.twist.twist.linear.y = liner_rx_.v_liner_y * linear_scale_;
     odom_msg.twist.twist.linear.z = 0.0;
 
-    //编码器的角速度
+    // 编码器的角速度
     odom_msg.twist.twist.angular.x = 0.0;
     odom_msg.twist.twist.angular.y = 0.0;
     odom_msg.twist.twist.angular.z = liner_rx_.v_angular_z * angular_scale_;
@@ -420,23 +426,22 @@ void BaseDriver::calc_odom()
 {
     rclcpp::Time current_time = BaseDriver::get_clock()->now();
 
-    float linear_velocity_x_  = liner_rx_.v_liner_x * linear_scale_;
-    float linear_velocity_y_  = liner_rx_.v_liner_y * linear_scale_;
+    float linear_velocity_x_ = liner_rx_.v_liner_x * linear_scale_;
+    float linear_velocity_y_ = liner_rx_.v_liner_y * linear_scale_;
     float angular_velocity_z_ = liner_rx_.v_angular_z * angular_scale_;
 
-    double vel_dt_      = (current_time - last_odom_vel_time_).seconds();
+    double vel_dt_ = (current_time - last_odom_vel_time_).seconds();
     last_odom_vel_time_ = current_time;
 
-    double delta_x  = (linear_velocity_x_ * cos(th_) - linear_velocity_y_ * sin(th_)) * vel_dt_; // m
-    double delta_y  = (linear_velocity_x_ * sin(th_) + linear_velocity_y_ * cos(th_)) * vel_dt_; // m
-    double delta_th = angular_velocity_z_ * vel_dt_;                                             // radians
+    double delta_x = (linear_velocity_x_ * cos(th_) - linear_velocity_y_ * sin(th_)) * vel_dt_; // m
+    double delta_y = (linear_velocity_x_ * sin(th_) + linear_velocity_y_ * cos(th_)) * vel_dt_; // m
+    double delta_th = angular_velocity_z_ * vel_dt_;                                            // radians
 
-    //计算机器人的当前位置
+    // 计算机器人的当前位置
     x_pos_ += delta_x;
     y_pos_ += delta_y;
-    th_ += delta_th; //实时角度信息,如果这里不使用IMU，也可以通过这种方式计算得出
+    th_ += delta_th; // 实时角度信息,如果这里不使用IMU，也可以通过这种方式计算得出
 }
-
 
 void BaseDriver::Timer10HzCallbackCallback()
 {
