@@ -20,6 +20,7 @@
 #include "geometry_msgs/msg/twist.hpp"
 #include <geometry_msgs/msg/transform_stamped.hpp>
 #include "tf2/LinearMath/Quaternion.h"
+#include "tf2_ros/transform_broadcaster.h"
 
 using namespace std;
 class Data_Stream;
@@ -69,10 +70,14 @@ private:
 
     // odom
     rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_publisher_;
+    rclcpp::Time last_odom_vel_time_ = BaseDriver::get_clock()->now();
+    rclcpp::Time current_time;
     std::string publish_odom_name_;
     std::string odom_frame_id_;
     std::string base_frame_id_;
     nav_msgs::msg::Odometry odom_msg;
+
+    std::unique_ptr<tf2_ros::TransformBroadcaster> odom_broadcaster_;
     geometry_msgs::msg::TransformStamped odom_tf;
     Data_Format_Liner liner_rx_;
     double x_pos_;
@@ -81,6 +86,8 @@ private:
     int loop_rate_;
     bool publish_odom_transform_;
     void init_odom();
+    void calc_odom();
+    void publish_odom();
     void setCovariance(bool isMove);
 
     // Update speed to board
