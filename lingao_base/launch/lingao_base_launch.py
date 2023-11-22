@@ -13,7 +13,7 @@ def generate_launch_description():
         DeclareLaunchArgument('use_imu', default_value='true', description='Whether to use imu.'),
 
         Node(name='lingao_base_node',
-            package='lingao_base_ros2',
+            package='lingao_base',
             executable='lingao_base_node',
             parameters=[{'port_name': LaunchConfiguration('port_name')},
                         {'port_baud': LaunchConfiguration('port_baud')},

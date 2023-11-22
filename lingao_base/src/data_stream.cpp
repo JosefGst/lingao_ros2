@@ -7,8 +7,8 @@
  *  Serial Port Data encoder
  */
 
-#include "lingao_base_ros2/data_stream.hpp"
-#include "lingao_base_ros2/Serial_Async.hpp"
+#include "lingao_base/data_stream.hpp"
+#include "lingao_base/Serial_Async.hpp"
 
 #include <unistd.h>
 #include <chrono>

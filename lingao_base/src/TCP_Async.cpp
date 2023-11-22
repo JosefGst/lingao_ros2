@@ -15,8 +15,8 @@
 #include <boost/thread.hpp>
 #include <boost/smart_ptr.hpp>
 
-#include <lingao_base_ros2/Serial_Async.hpp>
-#include <lingao_base_ros2/TCP_Async.hpp>
+#include <lingao_base/Serial_Async.hpp>
+#include <lingao_base/TCP_Async.hpp>
 
 TCP_Async::TCP_Async() : m_endpoint(boost::asio::ip::address::from_string("192.168.10.100"), 38000)
 {

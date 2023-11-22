@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(lingao_base_ros2)
+project(lingao_base)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -48,7 +48,7 @@ target_link_libraries(lingao_base_node ${Boost_LIBRARIES})
 
 # Install our headers
 install(
-  DIRECTORY include/lingao_base_ros2
+  DIRECTORY include/lingao_base
   DESTINATION include
 )
 

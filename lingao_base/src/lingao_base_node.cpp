@@ -9,7 +9,7 @@
  * @FilePath /lingao_ws/src/lingaoRobot/lingao_ros/lingao_base/src/lingao_base_node.cpp
  */
 
-#include "lingao_base_ros2/base_driver.hpp"
+#include "lingao_base/base_driver.hpp"
 
 int main(int argc, char *argv[])
 {

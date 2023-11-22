@@ -1,17 +1,17 @@
-#ifndef LINGAO_UDP_ASYNC_H
-#define LINGAO_UDP_ASYNC_H
+#ifndef LINGAO_TCP_ASYNC_H
+#define LINGAO_TCP_ASYNC_H
 
-#include <lingao_base_ros2/Serial_Async.hpp>
+#include <lingao_base/Serial_Async.hpp>
 
 typedef std::vector<unsigned char> vecBuff;
 
-class UDP_Async : public Transmission
+class TCP_Async : public Transmission
 {
   typedef std::function<void(size_t)> callback_t;
 
 public:
-  UDP_Async();
-  ~UDP_Async();
+  TCP_Async();
+  ~TCP_Async();
   bool init();
   bool init(std::string ip_, int port_);
 
@@ -28,8 +28,9 @@ public:
   bool isOpen();
 
 private:
-  boost::shared_ptr<boost::asio::ip::udp::socket> socket_;
-  boost::asio::ip::udp::endpoint m_endpoint;
+  // boost::asio::ip::tcp::socket tcp_socket;
+  boost::shared_ptr<boost::asio::ip::tcp::socket> socket_;
+  boost::asio::ip::tcp::endpoint m_endpoint;
 
 #if BOOST_VERSION >= 107000
   boost::shared_ptr<boost::asio::io_context> io_sev_;
@@ -64,4 +65,4 @@ private:
   void doClose();
 };
 
-#endif // LINGAO_UDP_ASYNC_H
+#endif // LINGAO_TCP_ASYNC_H

@@ -1,4 +1,4 @@
-#include "lingao_base_ros2/myObject.hpp"
+#include "lingao_base/myObject.hpp"
 
 MyClass::MyClass() : Node("myObject")
 {
