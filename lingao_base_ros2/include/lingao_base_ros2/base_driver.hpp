@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <string>
 #include "lingao_base_ros2/data_format.hpp"
+#include <lingao_msgs/msg/ling_ao_bms_status.hpp>
+#include <lingao_msgs/msg/ling_ao_rc_status.hpp>
 #include <boost/shared_ptr.hpp>
 
 #include "rclcpp/rclcpp.hpp"
@@ -92,6 +94,15 @@ private:
     int imu_calib_samples_;
     void init_imu();
     void publish_imu();
+
+    // BMS
+    rclcpp::Publisher<lingao_msgs::msg::LingAoBmsStatus>::SharedPtr bat_publisher_;
+    bool bmsStreamActive;
+
+    // RC
+    rclcpp::Publisher<lingao_msgs::msg::LingAoRCStatus>::SharedPtr rc_publisher_;
+    bool rcStreamActive;
+    void init_robot_stream();
 
 };
 

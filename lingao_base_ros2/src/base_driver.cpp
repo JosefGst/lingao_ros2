@@ -1,6 +1,5 @@
 // #define BOOST_BIND_NO_PLACEHOLDERS
 
-#include <memory>
 #include "lingao_base_ros2/base_driver.hpp"
 #include "lingao_base_ros2/data_stream.hpp"
 #include "lingao_base_ros2/Serial_Async.hpp"
@@ -52,6 +51,7 @@ BaseDriver::BaseDriver()
 
     init_odom();
     init_imu();
+    init_robot_stream();
 
     // publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
     timer_ = this->create_wall_timer(
@@ -127,6 +127,48 @@ void BaseDriver::InitParams()
     this->get_parameter("imu_calib_samples", imu_calib_samples_);
 }
 
+/// 设备数据流初始化
+void BaseDriver::init_robot_stream()
+{
+    // init Battery Management  stream
+    bmsStreamActive = false;
+
+        // if (pub_bat_.getNumSubscribers() > 0)
+        // {
+        //     bmsStreamActive = true;
+        //     ROS_INFO_STREAM("Starting battery data stream.");
+        // }
+        // else 
+        // {
+        //     bmsStreamActive = false;
+        //     ROS_INFO_STREAM("Stopping battery data stream.");
+        // }
+    bat_publisher_ = this->create_publisher<lingao_msgs::msg::LingAoBmsStatus>("battery_state", 1);
+    RCLCPP_INFO(this->get_logger(), "advertise to the battery state topic on [ %s ]", bat_publisher_.get()->get_topic_name());
+
+
+    // init remote control stream
+    rcStreamActive = false;
+    if(stream->rcAvailable() == true)
+    {
+        // ros::SubscriberStatusCallback status_cb = std::bind( [&]()
+        // {
+        //     if (pub_rc_.getNumSubscribers() > 0)
+        //     {
+        //         rcStreamActive = true;
+        //         ROS_INFO_STREAM("Starting RC data stream.");
+        //     }
+        //     else 
+        //     {
+        //         rcStreamActive = false;
+        //         ROS_INFO_STREAM("Stopping RC data stream.");
+        //     }
+        // });
+        rc_publisher_ = this->create_publisher<lingao_msgs::msg::LingAoRCStatus>("rc_state", 1);
+        RCLCPP_INFO(this->get_logger(), "advertise to the rc state topic on [ %s ]", rc_publisher_.get()->get_topic_name());
+    }
+}
+
 // ODOM初始化
 void BaseDriver::init_odom()
 {
@@ -183,6 +225,7 @@ void BaseDriver::init_imu()
         imu_msg.linear_acceleration_covariance[8] = 0.0001;
 
         imu_publisher_ = this->create_publisher<sensor_msgs::msg::Imu>(topic_imu_, 10);
+        RCLCPP_INFO(this->get_logger(), "advertise to the imu topic on [ %s ]", topic_imu_.c_str());
     }
 }
 
