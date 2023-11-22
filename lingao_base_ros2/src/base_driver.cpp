@@ -191,7 +191,7 @@ void BaseDriver::InitParams()
     this->get_parameter("angular_scale", angular_scale_);
 
     // IMU Params
-    this->declare_parameter("topic_imu", std::string("/imu/onboard_imu"));
+    this->declare_parameter("topic_imu", std::string("/imu_raw"));
     this->declare_parameter("imu_frame_id", std::string("imu_link"));
     this->declare_parameter("use_imu", true);
     this->declare_parameter("imu_calibrate_gyro", true);
