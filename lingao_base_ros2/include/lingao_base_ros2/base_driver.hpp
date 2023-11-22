@@ -46,6 +46,8 @@ private:
     rclcpp::TimerBase::SharedPtr timer_1hz_cb_;
     void Timer1HzCallbackCallback();
     bool timer1HzTimeOut;
+    rclcpp::TimerBase::SharedPtr cmd_vel_cb_timer_;
+    void CmdVelTimeout();
 
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
     size_t count_;
@@ -92,7 +94,7 @@ private:
 
     // Update speed to board
     std::string topic_cmd_vel_name_;
-    double cmd_vel_sub_timeout_vel_;
+    int cmd_vel_sub_timeout_vel_;
 
     // CALIB
     double linear_scale_;

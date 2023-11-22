@@ -46,6 +46,8 @@ BaseDriver::BaseDriver()
 
     liner_tx_.set(.0, .0, .0);
 
+    cmd_vel_cb_timer_ = this->create_wall_timer(std::chrono::milliseconds(cmd_vel_sub_timeout_vel_), std::bind(&BaseDriver::CmdVelTimeout, this));
+
     main_timer_cb_ = this->create_wall_timer(std::chrono::milliseconds(1000 / loop_rate_), std::bind(&BaseDriver::MainTimerCallback, this));
     timer_10hz_cb_ = this->create_wall_timer(std::chrono::milliseconds(100), std::bind(&BaseDriver::Timer10HzCallbackCallback, this));
     timer_1hz_cb_ = this->create_wall_timer(std::chrono::seconds(1), std::bind(&BaseDriver::Timer1HzCallbackCallback, this));
@@ -171,7 +173,7 @@ void BaseDriver::InitParams()
     this->declare_parameter("publish_odom_name", std::string("raw_odom"));
     this->declare_parameter("odom_frame_id", std::string("odom"));
     this->declare_parameter("base_frame_id", std::string("base_footprint"));
-    this->declare_parameter("cmd_vel_sub_timeout", 1.0);
+    this->declare_parameter("cmd_vel_sub_timeout", 1000);
     this->declare_parameter("pub_odom_tf", false);
 
     this->get_parameter("topic_cmd_vel_name", topic_cmd_vel_name_);
@@ -374,7 +376,7 @@ void BaseDriver::publish_odom()
 void BaseDriver::cmd_vel_CallBack(const geometry_msgs::msg::Twist::SharedPtr msg)
 {
     liner_tx_.set(msg->linear.x, msg->linear.y, msg->angular.z);
-    // cmd_vel_cb_timer.setPeriod(ros::Duration(cmd_vel_sub_timeout_vel_), true);
+    cmd_vel_cb_timer_->reset();
 }
 
 /// 运动协方差配置
@@ -444,4 +446,9 @@ void BaseDriver::Timer10HzCallbackCallback()
 void BaseDriver::Timer1HzCallbackCallback()
 {
     timer1HzTimeOut = true;
+}
+
+void BaseDriver::CmdVelTimeout()
+{
+    liner_tx_.set(.0, .0, .0);
 }
