@@ -1,6 +1,8 @@
 #ifndef BASE_DRIVER_H
 #define BASE_DRIVER_H
 
+#define BOOST_BIND_NO_PLACEHOLDERS
+
 #include <chrono>
 #include <functional>
 #include <memory>
@@ -11,7 +13,10 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
-#include <sensor_msgs/msg/imu.hpp>
+#include "sensor_msgs/msg/imu.hpp"
+#include "nav_msgs/msg/odometry.hpp"
+#include "geometry_msgs/msg/twist.hpp"
+#include <geometry_msgs/msg/transform_stamped.hpp>
 #include "tf2/LinearMath/Quaternion.h"
 
 using namespace std;
@@ -46,12 +51,26 @@ private:
     int serial_baud_rate;
     bool active;
 
+    // vel_cmd
+    rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr sub_cmd_vel_;
+    void cmd_vel_CallBack(const geometry_msgs::msg::Twist::SharedPtr msg);
+    Data_Format_Liner liner_tx_;
+
     // odom
+    rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_publisher_;
     std::string publish_odom_name_;
     std::string odom_frame_id_;
     std::string base_frame_id_;
+
+    nav_msgs::msg::Odometry odom_msg;
+    geometry_msgs::msg::TransformStamped odom_tf;
+    double x_pos_;
+    double y_pos_;
+    double th_;
     int loop_rate_;
     bool publish_odom_transform_;
+    void init_odom();
+    void setCovariance(bool isMove);
 
     // Update speed to board
     std::string topic_cmd_vel_name_;

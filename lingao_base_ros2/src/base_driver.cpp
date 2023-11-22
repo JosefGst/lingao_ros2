@@ -1,4 +1,6 @@
+// #define BOOST_BIND_NO_PLACEHOLDERS
 
+#include <memory>
 #include "lingao_base_ros2/base_driver.hpp"
 #include "lingao_base_ros2/data_stream.hpp"
 #include "lingao_base_ros2/Serial_Async.hpp"
@@ -6,6 +8,7 @@
 // #include "lingao_base_ros2/UDP_Async.hpp"
 #include "lingao_base_ros2/calibrate_gyro.hpp"
 #include "lingao_base_ros2/myObject.hpp"
+using std::placeholders::_1;
 
 BaseDriver::BaseDriver()
     : Node("lingao_base_driver"), count_(0)
@@ -47,11 +50,12 @@ BaseDriver::BaseDriver()
         return;
     }
 
+    init_odom();
     init_imu();
 
     // publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
     timer_ = this->create_wall_timer(
-        std::chrono::microseconds(100), std::bind(&BaseDriver::timer_callback, this));
+        std::chrono::milliseconds(50), std::bind(&BaseDriver::timer_callback, this));
 }
 
 void BaseDriver::timer_callback()
@@ -61,15 +65,19 @@ void BaseDriver::timer_callback()
     // RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
     // publisher_->publish(message);
 
-    bool isRead = false;
-    isRead = stream->get_Message(MSG_ID_GET_IMU);
-    if (isRead)
+    
+    if (use_imu_ == true)
     {
-        imu_data = stream->get_data_imu();
-        publish_imu();
+        bool isRead = false;
+        isRead = stream->get_Message(MSG_ID_GET_IMU);
+        if (isRead)
+        {
+            imu_data = stream->get_data_imu();
+            publish_imu();
+        }
+        else
+            RCLCPP_WARN(this->get_logger(), "Get IMU Data Time Out!");
     }
-    else
-        RCLCPP_WARN(this->get_logger(), "Get IMU Data Time Out!");
 }
 
 void BaseDriver::InitParams()
@@ -108,7 +116,7 @@ void BaseDriver::InitParams()
     // IMU Params
     this->declare_parameter("topic_imu", std::string("/imu/onboard_imu"));
     this->declare_parameter("imu_frame_id", std::string("imu_link"));
-    this->declare_parameter("use_imu", true);
+    this->declare_parameter("use_imu", false);
     this->declare_parameter("imu_calibrate_gyro", true);
     this->declare_parameter("imu_calib_samples", 300);
 
@@ -117,6 +125,32 @@ void BaseDriver::InitParams()
     this->get_parameter("use_imu", use_imu_);
     this->get_parameter("imu_calibrate_gyro", imu_calibrate_gyro_);
     this->get_parameter("imu_calib_samples", imu_calib_samples_);
+}
+
+// ODOM初始化
+void BaseDriver::init_odom()
+{
+    odom_publisher_ = this->create_publisher<nav_msgs::msg::Odometry>(publish_odom_name_, 1);
+    RCLCPP_INFO(this->get_logger(), "advertise to the odom topic on [ %s ]", publish_odom_name_.c_str());
+
+    sub_cmd_vel_ = this->create_subscription<geometry_msgs::msg::Twist>(topic_cmd_vel_name_, 1, std::bind(&BaseDriver::cmd_vel_CallBack, this, _1));
+    RCLCPP_INFO(this->get_logger(), "subscribe to the cmd topic on [ %s ]", topic_cmd_vel_name_.c_str());
+
+    // 初始化odom_trans
+    odom_tf.header.frame_id         = odom_frame_id_;
+    odom_tf.child_frame_id          = base_frame_id_;
+    odom_tf.transform.translation.z = 0.0;
+
+    //初始化odom 里程计消息
+    odom_msg.header.frame_id      = odom_frame_id_;
+    odom_msg.child_frame_id       = base_frame_id_;
+    odom_msg.pose.pose.position.z = 0.0;
+
+    setCovariance(false);
+
+    x_pos_ = 0;
+    y_pos_ = 0;
+    th_ = 0;
 }
 
 // IMU
@@ -155,7 +189,7 @@ void BaseDriver::init_imu()
 // IMU数据发布
 void BaseDriver::publish_imu()
 {
-    imu_msg.header.stamp = rclcpp::Time();
+    imu_msg.header.stamp = BaseDriver::get_clock()->now();
     imu_msg.linear_acceleration.x = imu_data.accx * 9.80665; // 加速度应以 m/s^2（原单位 g ）
     imu_msg.linear_acceleration.y = imu_data.accy * 9.80665;
     imu_msg.linear_acceleration.z = imu_data.accz * 9.80665;
@@ -185,4 +219,48 @@ void BaseDriver::publish_imu()
     imu_msg.orientation.z = goal_quat.z();
     imu_msg.orientation.w = goal_quat.w();
     imu_publisher_->publish(imu_msg);
+}
+
+/// 订阅回调速度控制命令
+void BaseDriver::cmd_vel_CallBack(const geometry_msgs::msg::Twist::SharedPtr msg)
+{
+    liner_tx_.set(msg->linear.x, msg->linear.y, msg->angular.z);
+    // cmd_vel_cb_timer.setPeriod(ros::Duration(cmd_vel_sub_timeout_vel_), true);
+}
+
+/// 运动协方差配置
+void BaseDriver::setCovariance(bool isMove)
+{
+    if (isMove == true)
+    {
+        odom_msg.pose.covariance[0]   = 1e-3;
+        odom_msg.pose.covariance[7]   = 1e-3;
+        odom_msg.pose.covariance[14]  = 1e6;
+        odom_msg.pose.covariance[21]  = 1e6;
+        odom_msg.pose.covariance[28]  = 1e6;
+        odom_msg.pose.covariance[35]  = 1e-2;
+        
+        odom_msg.twist.covariance[0]  = 1e-3;
+        odom_msg.twist.covariance[7]  = 1e-3;
+        odom_msg.twist.covariance[14] = 1e6;
+        odom_msg.twist.covariance[21] = 1e6;
+        odom_msg.twist.covariance[28] = 1e6;
+        odom_msg.twist.covariance[35] = 1e-2;
+    }
+    else
+    {
+        odom_msg.pose.covariance[0]   = 1e-9;
+        odom_msg.pose.covariance[7]   = 1e-9;
+        odom_msg.pose.covariance[14]  = 1e6;
+        odom_msg.pose.covariance[21]  = 1e6;
+        odom_msg.pose.covariance[28]  = 1e6;
+        odom_msg.pose.covariance[35]  = 1e-9;
+
+        odom_msg.twist.covariance[0]  = 1e-9;
+        odom_msg.twist.covariance[7]  = 1e-9;
+        odom_msg.twist.covariance[14] = 1e6;
+        odom_msg.twist.covariance[21] = 1e6;
+        odom_msg.twist.covariance[28] = 1e6;
+        odom_msg.twist.covariance[35] = 1e-9;
+    }
 }
