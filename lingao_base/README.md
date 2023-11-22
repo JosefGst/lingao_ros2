@@ -24,7 +24,7 @@ roslaunch lingao_base lingao_base_driver.launch
 /imu/data_raw ([sensor_msgs/Imu](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/Imu.html))  
 - 主题包括基于加速度和陀螺仪传感器的机器人姿态  
 
-/raw_odom ([nav_msgs/Odometry](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Odometry.html))  
+/odom_raw ([nav_msgs/Odometry](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Odometry.html))  
 - 基于编码器的的里程表信息
 
 /lingao_base_driver/battery_state (lingao_msgs/LingAoBmsStatus)

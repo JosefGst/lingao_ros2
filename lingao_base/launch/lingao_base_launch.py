@@ -19,7 +19,7 @@ def generate_launch_description():
                         {'port_baud': LaunchConfiguration('port_baud')},
                         {'name': 'freq',               'description': 'The frequency of odom and imu in HZ.',          'default_value': 80},
                         {'name': 'topic_cmd_vel_name', 'description': 'The name of the topic for cmd_vel.',            'default_value': 'cmd_vel'},
-                        {'name': 'publish_odom_name',  'description': 'The name of the topic for publishing odom.',    'default_value': 'odom'},
+                        {'name': 'publish_odom_name',  'description': 'The name of the topic for publishing odom.',    'default_value': 'odom_raw'},
                         {'name': 'base_frame_id',      'description': 'The ID of the base frame.',                     'default_value': 'base_footprint'},
                         {'cmd_vel_sub_timeout' : LaunchConfiguration('cmd_vel_sub_timeout')},
                         {'pub_odom_tf': LaunchConfiguration('pub_odom_tf')},
