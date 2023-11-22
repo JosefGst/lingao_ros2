@@ -35,8 +35,17 @@ public:
 
 private:
     void InitParams();
-    void timer_callback();
-    rclcpp::TimerBase::SharedPtr timer_;
+
+    // Timer
+    rclcpp::TimerBase::SharedPtr main_timer_cb_;
+    void MainTimerCallback();
+    rclcpp::TimerBase::SharedPtr timer_10hz_cb_;
+    void Timer10HzCallbackCallback();
+    bool timer10HzTimeOut;
+    rclcpp::TimerBase::SharedPtr timer_1hz_cb_;
+    void Timer1HzCallbackCallback();
+    bool timer1HzTimeOut;
+
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
     size_t count_;
 
@@ -63,9 +72,9 @@ private:
     std::string publish_odom_name_;
     std::string odom_frame_id_;
     std::string base_frame_id_;
-
     nav_msgs::msg::Odometry odom_msg;
     geometry_msgs::msg::TransformStamped odom_tf;
+    Data_Format_Liner liner_rx_;
     double x_pos_;
     double y_pos_;
     double th_;
@@ -97,10 +106,13 @@ private:
 
     // BMS
     rclcpp::Publisher<lingao_msgs::msg::LingAoBmsStatus>::SharedPtr bat_publisher_;
-    bool bmsStreamActive;
+    lingao_msgs::msg::LingAoBmsStatus bat_msg;
+    Data_Format_BAT rxData_battery;
 
     // RC
     rclcpp::Publisher<lingao_msgs::msg::LingAoRCStatus>::SharedPtr rc_publisher_;
+    lingao_msgs::msg::LingAoRCStatus rc_msg;
+    Data_Format_RC rxData_rc;
     bool rcStreamActive;
     void init_robot_stream();
 
