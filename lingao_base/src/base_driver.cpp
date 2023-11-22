@@ -374,8 +374,8 @@ void Base_Driver::base_Loop()
         else
             ROS_WARN_STREAM("Get VELOCITY Data Time Out!");
 
-        //  update vel_cmd
-        // if(true) 
+        //  更新速度消息
+        if(true) 
         {
             static Data_Format_Liner linertx;
             linertx.EndianSwapSet(&liner_tx_);

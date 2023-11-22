@@ -13,15 +13,6 @@ BaseDriver::BaseDriver()
     : Node("lingao_base_driver"), count_(0)
 {
     InitParams();
-    // // learning boost shared ptr
-    // boost::shared_ptr<std::string> x = boost::make_shared<std::string>("hello, world!");
-    // std::cout << *x;
-    // RCLCPP_INFO_STREAM(this->get_logger(), "Init: " << *x);
-
-    // // learning my object
-    // myObject = boost::make_shared<MyClass>();
-    // myObject->DoSomething();
-
     serial = boost::make_shared<Serial_Async>();
     stream = new Data_Stream(serial.get());
 
@@ -156,7 +147,7 @@ void BaseDriver::MainTimerCallback()
         RCLCPP_WARN(this->get_logger(), "Get VELOCITY Data Time Out!");
 
     //  更新速度消息
-    if (true)
+    // if (true)
     {
         static Data_Format_Liner linertx;
         linertx.EndianSwapSet(&liner_tx_);
@@ -169,7 +160,7 @@ void BaseDriver::InitParams()
     // Serial Port Params
     this->declare_parameter("port_name", std::string("/dev/lingao"));
     this->declare_parameter("port_baud", 230400);
-    this->declare_parameter("freq", 100);
+    this->declare_parameter("freq", 80);
 
     this->get_parameter("port_name", serial_port_);
     this->get_parameter("port_baud", serial_baud_rate);
@@ -200,7 +191,7 @@ void BaseDriver::InitParams()
     // IMU Params
     this->declare_parameter("topic_imu", std::string("/imu/onboard_imu"));
     this->declare_parameter("imu_frame_id", std::string("imu_link"));
-    this->declare_parameter("use_imu", false);
+    this->declare_parameter("use_imu", true);
     this->declare_parameter("imu_calibrate_gyro", true);
     this->declare_parameter("imu_calib_samples", 300);
 
@@ -237,6 +228,8 @@ void BaseDriver::init_odom()
     sub_cmd_vel_ = this->create_subscription<geometry_msgs::msg::Twist>(topic_cmd_vel_name_, 1, std::bind(&BaseDriver::cmd_vel_CallBack, this, _1));
     RCLCPP_INFO(this->get_logger(), "subscribe to the cmd topic on [ %s ]", topic_cmd_vel_name_.c_str());
 
+    // Initialize the transform broadcaster
+    odom_broadcaster_ = std::make_unique<tf2_ros::TransformBroadcaster>(*this);
     // 初始化odom_trans
     odom_tf.header.frame_id = odom_frame_id_;
     odom_tf.child_frame_id = base_frame_id_;
