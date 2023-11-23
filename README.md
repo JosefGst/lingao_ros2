@@ -17,6 +17,11 @@ For Gazebo simulation
     ros2 launch lingao_description gazebo_launch.py open_rviz:=true
 
 ![urdf](https://github.com/JosefGst/lingao_ros2/blob/humble/images/urdf.png)
+## :computer: Sim
+
+    ros2 launch lingao_sim sim_launch.py
+
+![sim](https://github.com/JosefGst/lingao_ros2/blob/humble/images/sim.png)
 
 ## :robot: Bringup
 
