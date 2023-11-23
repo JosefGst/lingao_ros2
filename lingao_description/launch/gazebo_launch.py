@@ -23,8 +23,8 @@ def generate_launch_description():
                                     description='Flag to enable joint_state_publisher_gui')
     model_arg = DeclareLaunchArgument(name='model', default_value=str(default_model_path),
                                       description='Absolute path to robot urdf file')
-    # rviz_arg = DeclareLaunchArgument(name='rvizconfig', default_value=str(default_rviz_config_path),
-    #                                  description='Absolute path to rviz config file')
+    rviz_arg = DeclareLaunchArgument(name='rvizconfig', default_value=str(default_rviz_config_path),
+                                     description='Absolute path to rviz config file')
     robot_description = ParameterValue(Command(['xacro ', LaunchConfiguration('model')]),
                                        value_type=str)
 
@@ -55,23 +55,26 @@ def generate_launch_description():
         arguments=['-entity', 'sam_bot', '-topic', 'robot_description'],
         output='screen'
     )
-
-    # rviz_node = Node(
-    #     package='rviz2',
-    #     executable='rviz2',
-    #     name='rviz2',
-    #     output='screen',
-    #     arguments=['-d', LaunchConfiguration('rvizconfig')],
-    # )
+    
+    rviz_node = Node(
+        condition=IfCondition(LaunchConfiguration('open_rviz')),
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        output='screen',
+        arguments=['-d', LaunchConfiguration('rvizconfig')],
+    )
 
     return LaunchDescription([
+        DeclareLaunchArgument('open_rviz', default_value='False'),
+
         ExecuteProcess(cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_init.so', '-s', 'libgazebo_ros_factory.so'], output='screen'),
         gui_arg,
         model_arg,
-        # rviz_arg,
         joint_state_publisher_node,
         joint_state_publisher_gui_node,
         robot_state_publisher_node,
         spawn_entity,
-        # rviz_node
+        rviz_arg,
+        rviz_node
     ])

@@ -22,7 +22,7 @@
             <geometry>
                 <!-- <box size="${base_length} ${base_width} ${base_height}" /> -->
                 <mesh
-                    filename="file://$(find lingao_description_ros2)/meshes/LA_MiniUGV_10A/mobile_base.stl"
+                    filename="file://$(find lingao_description)/meshes/LA_MiniUGV_10A/mobile_base.stl"
                     scale="1 1 1" />
             </geometry>
             <material name="yellow">
@@ -64,7 +64,7 @@
                 <geometry>
                     <!-- <cylinder length="${wheel_length}" radius="${wheel_radius}" /> -->
                     <mesh
-                        filename="file://$(find lingao_description_ros2)/meshes/LA_MiniUGV_10A/mobile_whell.stl" />
+                        filename="file://$(find lingao_description)/meshes/LA_MiniUGV_10A/mobile_whell.stl" />
                 </geometry>
                 <material name="Poppy">
                     <color rgba="0.4 0.4039 0.42745098 1.0" />
@@ -115,13 +115,30 @@
         <origin xyz="${-wheel_base/2} ${-wheel_track/2} ${wheel_joint_z}" rpy="0 0 ${M_PI}" />
     </xacro:base_wheel>
 
+    <!-- Hokuyo Laser -->
+    <xacro:include filename="$(find urdf_basic_shapes)/sensors/hokuyo.urdf.xacro" />
+    <xacro:hokuyo name="scan" xyz=".0 0 .15" rpy="0 0 0" parent="base_link" min_a="${-pi}" max_a="${pi}" topic="/scan" />
+
+    <!-- imu -->
+    <xacro:include filename="$(find urdf_basic_shapes)/sensors/imu.urdf.xacro" />
+    <xacro:imu name="imu" xyz="0 0 0" rpy="0 0 0" parent="base_link" hz="80"/>
+
+    <!-- usb_cam -->
+    <xacro:include filename="$(find urdf_basic_shapes)/sensors/usb_cam.urdf.xacro" />
+    <xacro:usb_cam name="camF" xyz=".10 0 .145" rpy="0 0 0" parent="base_link" rate="6" />
+
+    <!-- GPS -->
+    <xacro:include filename="$(find urdf_basic_shapes)/sensors/gps.urdf.xacro" />
+    <xacro:gps name="gps" xyz="-.1 -0.05 .13" rpy="0 0 0" parent="base_link" topic="/nav_sat" />
+
+
     <!-- Skid Steering Drive -->
     <gazebo>
         <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
             <commandTopic>cmd_vel</commandTopic>
             <odometryTopic>odom</odometryTopic>
             <odometryFrame>odom</odometryFrame>
-            <odometryRate>20.0</odometryRate>
+            <odometryRate>80.0</odometryRate>
             <robotBaseFrame>base_footprint</robotBaseFrame>
         </plugin>
     </gazebo>
