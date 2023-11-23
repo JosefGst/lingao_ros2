@@ -1,3 +1,28 @@
+# ROS 2
+
+## Installation
+
+    sudo apt install libboost-all-dev
+    cd lingao_ros2
+    sudo apt install python3-vcstool
+    vcs import .. < my.repos
+
+and build the workspace.
+## :computer: Description
+
+    ros2 launch urdf_launch display.launch.py urdf_package:=lingao_description urdf_package_path:=urdf/MiniUGV_10A.xacro
+
+For Gazebo simulation
+
+    ros2 launch lingao_description gazebo_launch.py open_rviz:=true
+
+![urdf](https://github.com/JosefGst/lingao_ros2/blob/humble/images/urdf.png)
+
+## :robot: Bringup
+
+    ros2 launch lingao_bringup bringup_launch.py
+
+# Original README
 #  灵遨科技 - 移动机器人 ROS 软件包
 
 该存储库是灵遨ROS机器人最小软件包集  
@@ -116,22 +141,3 @@
 * 问：如何下载驱动包？  
     答：使用GIT方式拉取即可：`git clone https://e.coding.net/keaa/lingaoros/lingao_ros.git`
 
-# ROS 2
-
-## installation
-
-    sudo apt install libboost-all-dev
-    cd lingao_ros2
-    sudo apt install python3-vcstool
-    vcs import .. < my.repos
-
-and build the workspace.
-## description
-
-    ros2 launch urdf_launch display.launch.py urdf_package:=lingao_description urdf_package_path:=urdf/MiniUGV_10A.xacro
-
-For Gazebo simulation
-
-    ros2 launch lingao_description gazebo_launch.py
-
-![urdf](https://github.com/JosefGst/lingao_ros2/blob/master/images/urdf.png)
