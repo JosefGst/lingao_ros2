@@ -1,5 +1,17 @@
 # ROS 2
 
+## Dependencies
+Install the [aws warehouse](https://github.com/aws-robotics/aws-robomaker-small-warehouse-world) in **aws_ws** and source it.
+
+    # build for ROS
+    rosdep install --from-paths . --ignore-src -r -y
+    colcon build
+
+    # run in ROS
+    source install/setup.sh
+    roslaunch aws_robomaker_small_warehouse_world view_small_warehouse.launch
+
+
 ## Installation
 
     sudo apt install libboost-all-dev
