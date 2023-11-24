@@ -13,7 +13,6 @@ def generate_launch_description():
     pkg_share = FindPackageShare(package='lingao_description').find('lingao_description')
     default_rviz_config_path = os.path.join(pkg_share, 'config/urdf.rviz')
     
-
     # Get URDF via xacro
     robot_description_content = Command(
         [
@@ -41,6 +40,11 @@ def generate_launch_description():
         # Joint State Publisher
         Node(package='joint_state_publisher', executable='joint_state_publisher', parameters=[{'use_sim_time': 'use_sim_time'}]),
 
+        # Robot launch file
+        IncludeLaunchDescription(str(get_package_share_path('lingao_bringup')/ 'launch'/ 'robot_launch.py'),
+                                 ),
+
+        # Rviz2
         Node(
         condition=IfCondition(LaunchConfiguration('open_rviz')),
         package='rviz2',
