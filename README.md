@@ -1,5 +1,7 @@
 # ROS 2
-![foxy badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/foxy.yaml/badge.svg) ![humble badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/humble.yaml/badge.svg) ![rolling badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/rolling.yaml/badge.svg)
+![foxy badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/foxy.yaml/badge.svg)
+![humble badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/humble.yaml/badge.svg)
+![rolling badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/rolling.yaml/badge.svg)
 
 ## Dependencies
 Install the [aws warehouse](https://github.com/aws-robotics/aws-robomaker-small-warehouse-world) in **aws_ws** and source it.
