@@ -82,7 +82,7 @@ def generate_launch_description():
         aws_warehouse,
         DeclareLaunchArgument('open_rviz', default_value='False'),
 
-        ExecuteProcess(cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_init.so', '-s', 'libgazebo_ros_factory.so'], output='screen'),
+        # ExecuteProcess(cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_init.so', '-s', 'libgazebo_ros_factory.so'], output='screen'),
         gui_arg,
         model_arg,
         joint_state_publisher_node,

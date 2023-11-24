@@ -135,11 +135,13 @@
     <!-- Skid Steering Drive -->
     <gazebo>
         <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
-            <commandTopic>cmd_vel</commandTopic>
-            <odometryTopic>odom</odometryTopic>
-            <odometryFrame>odom</odometryFrame>
-            <odometryRate>80.0</odometryRate>
-            <robotBaseFrame>base_footprint</robotBaseFrame>
+            <command_topic>cmd_vel</command_topic>
+            <odometry_topic>odom</odometry_topic>
+            <odometry_frame>odom</odometry_frame>
+            <!-- odometry rate not working -->
+            <odometry_rate>80.0</odometry_rate> 
+            <robot_base_frame>base_footprint</robot_base_frame>
+            <publish_odom_tf>false</publish_odom_tf>
         </plugin>
     </gazebo>
 
