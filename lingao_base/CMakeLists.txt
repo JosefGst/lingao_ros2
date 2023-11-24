@@ -15,7 +15,7 @@ find_package(geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
-find_package(Boost REQUIRED COMPONENTS program_options regex )
+# find_package(Boost REQUIRED COMPONENTS program_options regex )
 include_directories( ${Boost_INCLUDE_DIRS} )
 
 
@@ -31,20 +31,12 @@ add_executable(lingao_base_node src/lingao_base_node.cpp
 )
 ament_target_dependencies(lingao_base_node rclcpp tf2 tf2_ros nav_msgs lingao_msgs geometry_msgs sensor_msgs std_msgs)
 
+# link to boost system and thread
 find_package(Boost REQUIRED COMPONENTS system thread)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 target_link_libraries(lingao_base_node ${Boost_LIBRARIES})
 
-
-# add_library(data_stream src/data_stream.cpp
-#   
-#   # src/base_driver.cpp
-#   # src/Serial_Async.cpp
-#   # src/TCP_Async.cpp
-#   # src/UDP_Async.cpp
-# )
-# ament_target_dependencies(data_stream rclcpp std_msgs)
 
 # Install our headers
 install(
@@ -57,22 +49,11 @@ install(TARGETS
   lingao_base_node
   DESTINATION lib/${PROJECT_NAME}
 )
-# Install library
-# install(
-#   TARGETS data_stream
-#   EXPORT data_stream
-#   LIBRARY DESTINATION lib
-#   ARCHIVE DESTINATION lib
-#   RUNTIME DESTINATION bin
-#   INCLUDES DESTINATION include
-# )
 
 install(DIRECTORY
   launch
   DESTINATION share/${PROJECT_NAME}/
 )
-
-
 
 
 if(BUILD_TESTING)
@@ -82,4 +63,4 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-ament_package(CONFIG_EXTRAS ConfigExtras.cmake)
+ament_package()

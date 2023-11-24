@@ -18,13 +18,13 @@
   <depend>lingao_msgs</depend>
   <depend>sensor_msgs</depend>
   <depend>geometry_msgs</depend>
-  <depend>imu-filter-madgwick</depend>
+  <!-- <depend>imu-filter-madgwick</depend> -->
   <depend>libboost-dev</depend>
   <depend>boost</depend>
-  <depend>lboost_thread-mt</depend>
+  <!-- <depend>lboost_thread-mt</depend> -->
   <depend>std_msgs</depend>
-  <depend>boost_system</depend>
-  <depend>boost_thread</depend>
+  <!-- <depend>boost_system</depend> -->
+  <!-- <depend>boost_thread</depend> -->
 
   <export>
     <build_type>ament_cmake</build_type>
