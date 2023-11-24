@@ -170,7 +170,7 @@ void BaseDriver::InitParams()
 
     // Topic Params
     this->declare_parameter("topic_cmd_vel_name", std::string("/cmd_vel"));
-    this->declare_parameter("publish_odom_name", std::string("odom_raw"));
+    this->declare_parameter("publish_odom_name", std::string("odom"));
     this->declare_parameter("odom_frame_id", std::string("odom"));
     this->declare_parameter("base_frame_id", std::string("base_footprint"));
     this->declare_parameter("cmd_vel_sub_timeout", 1000);
@@ -191,8 +191,8 @@ void BaseDriver::InitParams()
     this->get_parameter("angular_scale", angular_scale_);
 
     // IMU Params
-    this->declare_parameter("topic_imu", std::string("/imu_raw"));
-    this->declare_parameter("imu_frame_id", std::string("imu_link"));
+    this->declare_parameter("topic_imu", std::string("/imu/data_raw"));
+    this->declare_parameter("imu_frame_id", std::string("imu"));
     this->declare_parameter("use_imu", true);
     this->declare_parameter("imu_calibrate_gyro", true);
     this->declare_parameter("imu_calib_samples", 300);

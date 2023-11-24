@@ -26,7 +26,7 @@ def generate_launch_description():
                         {'name': 'linear_scale',       'description': 'The scale of linear velocity.',                 'default_value': 1.0},
                         {'name': 'angular_scale',      'description': 'The scale of angular velocity.',                'default_value': 1.0},
                         {'name': 'topic_imu',          'description': 'The name of the topic for imu.',                'default_value': 'imu'},
-                        {'name': 'imu_frame_id',       'description': 'The ID of the imu frame.',                      'default_value': 'imu'},
+                        {'name': 'imu_frame_id',       'description': 'The ID of the imu frame.',                      'default_value': 'imu/data_raw'},
                         {'use_imu': LaunchConfiguration('use_imu')},
                         {'name': 'imu_calibrate_gyro', 'description': 'Whether to calibrate gyro.',                    'default_value': True},
                         {'name': 'imu_calib_samples',  'description': 'The number of samples for gyro calibration.',   'default_value': 300},

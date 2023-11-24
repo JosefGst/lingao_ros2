@@ -11,7 +11,9 @@ find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 
 install(DIRECTORY
+  include
   launch
+  config
   DESTINATION share/${PROJECT_NAME}/
 )
 
