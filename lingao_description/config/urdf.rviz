@@ -7,6 +7,7 @@ Panels:
         - /Global Options1
         - /Status1
         - /RobotModel1/Mass Properties1
+        - /Imu1/Axes properties1
       Splitter Ratio: 0.6117647290229797
     Tree Height: 539
   - Class: rviz_common/Selection
@@ -26,7 +27,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: LaserScan
+    SyncSource: ""
 Visualization Manager:
   Class: ""
   Displays:
@@ -94,6 +95,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        gps:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         imu:
           Alpha: 1
           Show Axes: false
@@ -138,6 +144,8 @@ Visualization Manager:
           Value: true
         front_right_wheel_link:
           Value: true
+        gps:
+          Value: true
         imu:
           Value: true
         odom:
@@ -163,6 +171,8 @@ Visualization Manager:
               front_left_wheel_link:
                 {}
               front_right_wheel_link:
+                {}
+              gps:
                 {}
               imu:
                 {}
@@ -222,6 +232,34 @@ Visualization Manager:
         Reliability Policy: Reliable
         Value: /camF/image_raw
       Value: true
+    - Acceleration properties:
+        Acc. vector alpha: 1
+        Acc. vector color: 255; 0; 0
+        Acc. vector scale: 1
+        Derotate acceleration: true
+        Enable acceleration: false
+      Axes properties:
+        Axes scale: 0.5
+        Enable axes: true
+      Box properties:
+        Box alpha: 1
+        Box color: 255; 0; 0
+        Enable box: false
+        x_scale: 1
+        y_scale: 1
+        z_scale: 1
+      Class: rviz_imu_plugin/Imu
+      Enabled: true
+      Name: Imu
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /imu/data
+      Value: true
+      fixed_frame_orientation: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -268,25 +306,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 1.1350868940353394
+      Distance: 2.5093157291412354
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.10614647716283798
-        Y: 0.20562656223773956
-        Z: 0.283003032207489
+        X: -0.12548679113388062
+        Y: 0.17704316973686218
+        Z: 0.7903532385826111
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.34539833664894104
+      Pitch: 0.050398096442222595
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.7953987121582031
+      Yaw: 0.4153990149497986
     Saved: ~
 Window Geometry:
   Displays:

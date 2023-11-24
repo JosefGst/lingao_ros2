@@ -9,7 +9,7 @@ import os
 
 
 def generate_launch_description():
-    pub_odom_tf = LaunchConfiguration('pub_odom_tf', default='true')
+    pub_odom_tf = LaunchConfiguration('pub_odom_tf', default='false')
     pkg_share = FindPackageShare(package='lingao_description').find('lingao_description')
     default_rviz_config_path = os.path.join(pkg_share, 'config/urdf.rviz')
     
