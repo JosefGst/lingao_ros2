@@ -64,6 +64,10 @@ def generate_launch_description():
         arguments=['-entity', 'sam_bot', '-topic', 'robot_description'],
         output='screen'
     )
+
+    # Robot launch file
+    robot_launch = IncludeLaunchDescription(str(get_package_share_path('lingao_bringup')/ 'launch'/ 'robot_launch.py'),
+                                            launch_arguments={'use_sim_time': use_sim_time}.items())
     
     rviz_node = Node(
         condition=IfCondition(LaunchConfiguration('open_rviz')),
@@ -85,6 +89,7 @@ def generate_launch_description():
         joint_state_publisher_gui_node,
         robot_state_publisher_node,
         spawn_entity,
+        robot_launch,
         rviz_arg,
         rviz_node
     ])
