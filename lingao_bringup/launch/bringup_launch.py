@@ -36,14 +36,17 @@ def generate_launch_description():
                                                     'pub_odom_tf': pub_odom_tf}.items()),
         # Robot State Publisher
         Node(package="robot_state_publisher", executable="robot_state_publisher", output="both",
-            parameters=[robot_description,{'use_sim_time': 'use_sim_time'}]),
+            parameters=[robot_description,{'use_sim_time': LaunchConfiguration('use_sim_time')}]),
         # Joint State Publisher
-        Node(package='joint_state_publisher', executable='joint_state_publisher', parameters=[{'use_sim_time': 'use_sim_time'}]),
+        Node(package='joint_state_publisher', executable='joint_state_publisher', parameters=[{'use_sim_time': LaunchConfiguration('use_sim_time')}]),
 
         # Robot launch file
         IncludeLaunchDescription(str(get_package_share_path('lingao_bringup')/ 'launch'/ 'robot_launch.py'),
                                  ),
-
+        # RPLIDAR A2M8
+        IncludeLaunchDescription(str(get_package_share_path('rplidar_ros')/ 'launch'/ 'rplidar_a2m8_launch.py'),
+                                launch_arguments={'serial_port': '/dev/rplidar'}.items()),
+                                 
         # Rviz2
         Node(
         condition=IfCondition(LaunchConfiguration('open_rviz')),
