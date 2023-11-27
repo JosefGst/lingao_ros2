@@ -42,6 +42,8 @@ For Gazebo simulation
 
     ros2 launch lingao_slam online_async_launch.py
 
+![slam](https://github.com/JosefGst/lingao_ros2/blob/humble/images/slam.png)
+
 ## :robot: Bringup
 
     ros2 launch lingao_bringup bringup_launch.py
