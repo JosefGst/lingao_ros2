@@ -41,7 +41,7 @@ For Gazebo simulation
 
 ## :computer: SLAM
 
-    ros2 launch lingao_slam online_async_launch.py
+    ros2 launch lingao_slam slam_launch.py
 
 for localization only
 

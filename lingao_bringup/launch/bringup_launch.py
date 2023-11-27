@@ -45,7 +45,8 @@ def generate_launch_description():
                                  ),
         # RPLIDAR A2M8
         IncludeLaunchDescription(str(get_package_share_path('rplidar_ros')/ 'launch'/ 'rplidar_a2m8_launch.py'),
-                                launch_arguments={'serial_port': '/dev/rplidar'}.items()),
+                                launch_arguments={'serial_port': '/dev/rplidar',
+                                                  'frame_id': 'scan'}.items()),
                                  
         # Rviz2
         Node(
