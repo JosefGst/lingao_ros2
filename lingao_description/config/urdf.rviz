@@ -7,6 +7,7 @@ Panels:
         - /Global Options1
         - /Status1
         - /RobotModel1/Mass Properties1
+        - /LaserScan1
         - /Imu1/Axes properties1
       Splitter Ratio: 0.6117647290229797
     Tree Height: 539
@@ -27,7 +28,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: LaserScan
 Visualization Manager:
   Class: ""
   Displays:
@@ -199,14 +200,14 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: -999999
+      Max Intensity: 0
       Min Color: 0; 0; 0
-      Min Intensity: 999999
+      Min Intensity: 0
       Name: LaserScan
       Position Transformer: XYZ
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.009999999776482582
+      Size (m): 0.07000000029802322
       Style: Flat Squares
       Topic:
         Depth: 5
@@ -306,25 +307,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 2.5093157291412354
+      Distance: 6.1399102210998535
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.12548679113388062
-        Y: 0.17704316973686218
-        Z: 0.7903532385826111
+        X: 0.15914711356163025
+        Y: -0.039051640778779984
+        Z: 0.7156127691268921
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.050398096442222595
+      Pitch: 1.2253977060317993
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.4153990149497986
+      Yaw: 1.7553985118865967
     Saved: ~
 Window Geometry:
   Displays:
