@@ -38,6 +38,10 @@ For Gazebo simulation
 
 ![sim](https://github.com/JosefGst/lingao_ros2/blob/humble/images/sim.png)
 
+## :computer: SLAM
+
+    ros2 launch lingao_slam online_async_launch.py
+
 ## :robot: Bringup
 
     ros2 launch lingao_bringup bringup_launch.py
