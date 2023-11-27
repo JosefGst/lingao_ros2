@@ -1,6 +1,7 @@
 # ROS 2
 ![foxy badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/foxy.yaml/badge.svg)
 ![humble badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/humble.yaml/badge.svg)
+![iron badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/iron.yaml/badge.svg)
 ![rolling badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/rolling.yaml/badge.svg)
 
 ## Dependencies
@@ -42,8 +43,17 @@ For Gazebo simulation
 
     ros2 launch lingao_slam online_async_launch.py
 
+for localization only
+
+    ros2 launch lingao_slam slam_launch.py slam_params_file:=src/lingao_ros2/lingao_slam/config/localizer_params_online_async.yaml
+
 ![slam](https://github.com/JosefGst/lingao_ros2/blob/humble/images/slam.png)
 
+## :computer: Navigation
+
+    ros2 launch lingao_nav navigation_launch.py use_sim_time:=true
+    ros2 launch lingao_slam slam_launch.py
+    
 ## :robot: Bringup
 
     ros2 launch lingao_bringup bringup_launch.py
