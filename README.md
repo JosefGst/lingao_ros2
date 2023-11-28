@@ -51,8 +51,9 @@ for localization only
 
 ## :computer: Navigation
 
-    ros2 launch lingao_nav navigation_launch.py use_sim_time:=true
-    ros2 launch lingao_slam slam_launch.py
+    ros2 launch lingao_nav lingao_nav_launch.py use_sim_time:=true
+
+![nav](https://github.com/JosefGst/lingao_ros2/blob/humble/images/nav.png)
     
 ## :robot: Bringup
 
