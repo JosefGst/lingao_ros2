@@ -12,8 +12,12 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('use_sim_time', default_value='false', description='Use simulation (Gazebo) clock if true'),
 
-        # IMU COMPLEMENTARY FILTER
-        IncludeLaunchDescription(str(get_package_share_path('lingao_bringup')/ 'launch'/'imu'/ 'complementary_filter_launch.py'),),
+        #! Complementary Filter not working well
+        # IMU COMPLEMENTARY FILTER 
+        # IncludeLaunchDescription(str(get_package_share_path('lingao_bringup')/ 'launch'/'imu'/ 'complementary_filter_launch.py'),),
+
+        # IMU MADWICK FILTER
+        IncludeLaunchDescription(str(get_package_share_path('lingao_bringup')/ 'launch'/'imu'/ 'madwick_filter_launch.py'),),
 
         # ROBOT LOCALIZATION
         Node(package='robot_localization', executable='ekf_node', name='ekf_filter_node', output='screen',
