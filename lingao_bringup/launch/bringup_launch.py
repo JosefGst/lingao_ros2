@@ -47,7 +47,10 @@ def generate_launch_description():
         IncludeLaunchDescription(str(get_package_share_path('rplidar_ros')/ 'launch'/ 'rplidar_a2m8_launch.py'),
                                 launch_arguments={'serial_port': '/dev/rplidar',
                                                   'frame_id': 'scan'}.items()),
-                                 
+        # GPS
+        IncludeLaunchDescription(str(get_package_share_path('lingao_bringup')/ 'launch'/ 'gps'/ 'nmea_serial_driver_launch.py'),
+                                ),
+                                                         
         # Rviz2
         Node(
         condition=IfCondition(LaunchConfiguration('open_rviz')),

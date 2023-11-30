@@ -14,6 +14,7 @@
   <depend>imu_tools</depend>
   <depend>robot_localization</depend>
   <depend>rplidar_ros</depend>
+  <depend>nmea_navsat_driver</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
