@@ -10,6 +10,23 @@ jobs:
           - {ROS_DISTRO: rolling, ROS_REPO: main}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: 'ros-industrial/industrial_ci@master'
+      - name: checkout lingao_ros2
+        uses: actions/checkout@v4
+        with:
+          path: src/lingao_ros2
+
+      - name: checkout urdf_basic_shapes
+        uses: actions/checkout@v4
+        with:
+          repository: JosefGst/urdf_basic_shapes
+          path: src/urdf_basic_shapes
+      
+      - name: checkout urdf_launch
+        uses: actions/checkout@v4
+        with:
+          repository: MetroRobots/urdf_launch
+          path: src/urdf_launch
+
+      - name: industrial_ci
+        uses: 'ros-industrial/industrial_ci@master'
         env: ${{matrix.env}}
