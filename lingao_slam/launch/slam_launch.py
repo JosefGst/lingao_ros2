@@ -11,7 +11,7 @@ from ament_index_python.packages import get_package_share_path, get_package_shar
 def generate_launch_description():
     
     return LaunchDescription([
-        DeclareLaunchArgument('use_sim_time', default_value='true', description='Use simulation (Gazebo) clock if true'),
+        DeclareLaunchArgument('use_sim_time', default_value='false', description='Use simulation (Gazebo) clock if true'),
         DeclareLaunchArgument('open_rviz', default_value='false', description='Open rviz if true'),
         DeclareLaunchArgument('slam_params_file',
             default_value=os.path.join(get_package_share_directory("lingao_slam"), 'config', 'mapper_params_online_async.yaml'),
