@@ -29,7 +29,7 @@ def generate_launch_description():
     robot_description = ParameterValue(Command(['xacro ', LaunchConfiguration('model')]),
                                        value_type=str)
 
-    aws_warehouse = IncludeLaunchDescription(str(get_package_share_path("aws_robomaker_small_warehouse_world")/ "launch"/ "april_warehouse.launch.py"))
+    aws_warehouse = IncludeLaunchDescription(str(get_package_share_path("aws_robomaker_small_warehouse_world")/ "launch"/ "small_warehouse.launch.py"))
 
     robot_state_publisher_node = Node(
         package='robot_state_publisher',

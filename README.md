@@ -6,6 +6,10 @@
 ## Dependencies
 Install the [aws warehouse](https://github.com/aws-robotics/aws-robomaker-small-warehouse-world) in **aws_ws** and source it.
 
+    mkdir -p aws_ws/src
+    cd aws_ws/src/
+    git clone https://github.com/JosefGst/aws-robomaker-small-warehouse-world.git -b ros2
+    cd aws_ws
     # build for ROS
     rosdep install --from-paths . --ignore-src -r -y
     colcon build
@@ -40,7 +44,7 @@ For Gazebo simulation
 
 ## :computer: SLAM
 
-    ros2 launch lingao_slam slam_launch.py use_sim_time:=true
+    ros2 launch lingao_slam slam_launch.py use_sim_time:=true open_rviz:=true
 
 for localization only
 
