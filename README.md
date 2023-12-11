@@ -48,7 +48,7 @@ For Gazebo simulation
 
 for localization only
 
-    ros2 launch lingao_slam slam_launch.py slam_params_file:=src/lingao_ros2/lingao_slam/config/localizer_params_online_async.yaml
+    ros2 launch lingao_slam slam_launch.py slam_params_file:=src/lingao_ros2/lingao_slam/config/localizer_params_online_async.yaml use_sim_time:=true
 
 ![slam](https://github.com/JosefGst/lingao_ros2/blob/humble/images/slam.png)
 
@@ -74,4 +74,8 @@ for localization only
 
 ## :robot: Navigation
 
+    ros2 launch lingao_nav lingao_nav_launch.py
+
+:computer:
     
+    ros2 run rviz2 rviz2 -d ros2/lingao_ws/src/lingao_ros2/lingao_nav/config/nav.rviz 
