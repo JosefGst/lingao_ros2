@@ -2,6 +2,7 @@
 ![humble badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/humble.yaml/badge.svg)
 ![iron badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/iron.yaml/badge.svg)
 ![rolling badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/rolling.yaml/badge.svg)
+![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
 
 ## Dependencies
 Install the [aws warehouse](https://github.com/aws-robotics/aws-robomaker-small-warehouse-world) in **aws_ws** and source it.
@@ -22,9 +23,13 @@ Install the [aws warehouse](https://github.com/aws-robotics/aws-robomaker-small-
 ## Installation
 
     sudo apt install libboost-all-dev
-    cd lingao_ros2
+    mkdir ros2/lingao_ws/src -p
+    cd ros2/lingao_ros2/src
+    git clone https://github.com/JosefGst/lingao_ros2.git
     sudo apt install python3-vcstool
     vcs import .. < my.repos
+    cd ~/ros2/lingao_ws
+    rosdep update && rosdep install -i --from-path src --rosdistro $ROS_DISTRO -y
 
 and build the workspace.
 ## :computer: Description
