@@ -26,7 +26,7 @@ def generate_launch_description():
     robot_description = {"robot_description": robot_description_content}
 
     return LaunchDescription([
-        DeclareLaunchArgument('open_rviz', default_value='true', description='Whether to open rviz.'),
+        DeclareLaunchArgument('open_rviz', default_value='false', description='Whether to open rviz.'),
         DeclareLaunchArgument('use_sim_time', default_value='false', description='Use simulation (Gazebo) clock if true'),
         DeclareLaunchArgument(name='rvizconfig', default_value=str(default_rviz_config_path), description='Absolute path to rviz config file'),
 
