@@ -2,7 +2,6 @@
 ![humble badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/humble.yaml/badge.svg)
 ![iron badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/iron.yaml/badge.svg)
 ![rolling badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/rolling.yaml/badge.svg)
-![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
 
 ## Dependencies
 Install the [aws warehouse](https://github.com/aws-robotics/aws-robomaker-small-warehouse-world) in **aws_ws** and source it.
