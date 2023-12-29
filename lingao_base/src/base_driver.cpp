@@ -49,6 +49,7 @@ BaseDriver::BaseDriver()
     cmd_vel_cb_timer_ = this->create_wall_timer(std::chrono::milliseconds(cmd_vel_sub_timeout_vel_), std::bind(&BaseDriver::CmdVelTimeout, this));
 
     main_timer_cb_ = this->create_wall_timer(std::chrono::milliseconds(1000 / loop_rate_), std::bind(&BaseDriver::MainTimerCallback, this));
+    timer_25hz_cb_ = this->create_wall_timer(std::chrono::milliseconds(30), std::bind(&BaseDriver::Timer25HzCallbackCallback, this));
     timer_10hz_cb_ = this->create_wall_timer(std::chrono::milliseconds(100), std::bind(&BaseDriver::Timer10HzCallbackCallback, this));
     timer_1hz_cb_ = this->create_wall_timer(std::chrono::seconds(1), std::bind(&BaseDriver::Timer1HzCallbackCallback, this));
 }
@@ -62,61 +63,7 @@ void BaseDriver::MainTimerCallback()
         RCLCPP_ERROR(this->get_logger(), "Serial closes unexpectedly!");
         return;
     }
-
-    if (timer1HzTimeOut)
-    {
-
-        isRead = stream->get_Message(MSG_ID_GET_VOLTAGE);
-        if (isRead)
-        {
-            // 成功读取后数据处理
-            rxData_battery = stream->get_data_battery();
-            bat_msg.header.stamp = BaseDriver::get_clock()->now();
-            bat_msg.voltage = rxData_battery.voltage / 100.0;
-            bat_msg.current = rxData_battery.current / 100.0;
-            bat_msg.percentage = rxData_battery.percentage;
-            bat_msg.temperature = rxData_battery.temperature / 10.0;
-
-            bat_publisher_->publish(bat_msg);
-        }
-        else
-            RCLCPP_WARN(this->get_logger(), "Get VOLTAGE Data Time Out!");
-
-        timer1HzTimeOut = false;
-    }
-
-    if (timer10HzTimeOut)
-    {
-        // RC遥控数据流
-        if (rcStreamActive)
-        {
-            isRead = stream->get_Message(MSG_ID_GET_RC);
-            if (isRead)
-            {
-                rxData_rc = stream->get_data_rc();
-
-                rc_msg.header.stamp = BaseDriver::get_clock()->now();
-                rc_msg.connect = rxData_rc.connect;
-                rc_msg.ch1 = rxData_rc.ch1;
-                rc_msg.ch2 = rxData_rc.ch2;
-                rc_msg.ch3 = rxData_rc.ch3;
-                rc_msg.ch4 = rxData_rc.ch4;
-                rc_msg.ch5 = rxData_rc.ch5;
-                rc_msg.ch6 = rxData_rc.ch6;
-                rc_msg.ch7 = rxData_rc.ch7;
-                rc_msg.ch8 = rxData_rc.ch8;
-                rc_msg.ch9 = rxData_rc.ch9;
-                rc_msg.ch10 = rxData_rc.ch10;
-
-                rc_publisher_->publish(rc_msg);
-            }
-            else
-                RCLCPP_WARN(this->get_logger(), "Get Remote Control Data Time Out!");
-        }
-
-        timer10HzTimeOut = false;
-    }
-
+    //  IMU
     if (use_imu_ == true)
     {
         bool isRead = false;
@@ -130,7 +77,7 @@ void BaseDriver::MainTimerCallback()
             RCLCPP_WARN(this->get_logger(), "Get IMU Data Time Out!");
     }
 
-    // 速度反馈数据流
+    // ODOM
     isRead = stream->get_Message(MSG_ID_GET_VELOCITY);
     if (isRead)
     {
@@ -147,14 +94,6 @@ void BaseDriver::MainTimerCallback()
     }
     else
         RCLCPP_WARN(this->get_logger(), "Get VELOCITY Data Time Out!");
-
-    //  更新速度消息
-    // if (true)
-    {
-        static Data_Format_Liner linertx;
-        linertx.EndianSwapSet(&liner_tx_);
-        stream->update_liner_speed(linertx);
-    }
 }
 
 void BaseDriver::InitParams()
@@ -376,6 +315,11 @@ void BaseDriver::publish_odom()
 void BaseDriver::cmd_vel_CallBack(const geometry_msgs::msg::Twist::SharedPtr msg)
 {
     liner_tx_.set(msg->linear.x, msg->linear.y, msg->angular.z);
+    // send cmd_vel to the robot
+    static Data_Format_Liner linertx;
+    linertx.EndianSwapSet(&liner_tx_);
+    stream->update_liner_speed(linertx);
+    
     cmd_vel_cb_timer_->reset();
 }
 
@@ -438,14 +382,63 @@ void BaseDriver::calc_odom()
     th_ += delta_th; // 实时角度信息,如果这里不使用IMU，也可以通过这种方式计算得出
 }
 
+void BaseDriver::Timer25HzCallbackCallback()
+{
+    //  更新速度消息
+    // static Data_Format_Liner linertx;
+    // linertx.EndianSwapSet(&liner_tx_);
+    // stream->update_liner_speed(linertx);
+}
+
 void BaseDriver::Timer10HzCallbackCallback()
 {
-    timer10HzTimeOut = true;
+    bool isRead = false;
+    // RC遥控数据流
+    if (rcStreamActive)
+    {
+        isRead = stream->get_Message(MSG_ID_GET_RC);
+        if (isRead)
+        {
+            rxData_rc = stream->get_data_rc();
+
+            rc_msg.header.stamp = BaseDriver::get_clock()->now();
+            rc_msg.connect = rxData_rc.connect;
+            rc_msg.ch1 = rxData_rc.ch1;
+            rc_msg.ch2 = rxData_rc.ch2;
+            rc_msg.ch3 = rxData_rc.ch3;
+            rc_msg.ch4 = rxData_rc.ch4;
+            rc_msg.ch5 = rxData_rc.ch5;
+            rc_msg.ch6 = rxData_rc.ch6;
+            rc_msg.ch7 = rxData_rc.ch7;
+            rc_msg.ch8 = rxData_rc.ch8;
+            rc_msg.ch9 = rxData_rc.ch9;
+            rc_msg.ch10 = rxData_rc.ch10;
+
+            rc_publisher_->publish(rc_msg);
+        }
+        else
+            RCLCPP_WARN(this->get_logger(), "Get Remote Control Data Time Out!");
+    }
 }
 
 void BaseDriver::Timer1HzCallbackCallback()
 {
-    timer1HzTimeOut = true;
+    bool isRead = false;
+    isRead = stream->get_Message(MSG_ID_GET_VOLTAGE);
+    if (isRead)
+    {
+        // 成功读取后数据处理
+        rxData_battery = stream->get_data_battery();
+        bat_msg.header.stamp = BaseDriver::get_clock()->now();
+        bat_msg.voltage = rxData_battery.voltage / 100.0;
+        bat_msg.current = rxData_battery.current / 100.0;
+        bat_msg.percentage = rxData_battery.percentage;
+        bat_msg.temperature = rxData_battery.temperature / 10.0;
+
+        bat_publisher_->publish(bat_msg);
+    }
+    else
+        RCLCPP_WARN(this->get_logger(), "Get VOLTAGE Data Time Out!");  
 }
 
 void BaseDriver::CmdVelTimeout()

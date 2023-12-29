@@ -40,12 +40,12 @@ private:
     // Timer
     rclcpp::TimerBase::SharedPtr main_timer_cb_;
     void MainTimerCallback();
+    rclcpp::TimerBase::SharedPtr timer_25hz_cb_;
+    void Timer25HzCallbackCallback();
     rclcpp::TimerBase::SharedPtr timer_10hz_cb_;
     void Timer10HzCallbackCallback();
-    bool timer10HzTimeOut;
     rclcpp::TimerBase::SharedPtr timer_1hz_cb_;
     void Timer1HzCallbackCallback();
-    bool timer1HzTimeOut;
     rclcpp::TimerBase::SharedPtr cmd_vel_cb_timer_;
     void CmdVelTimeout();
 
