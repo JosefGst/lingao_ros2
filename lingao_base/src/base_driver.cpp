@@ -444,4 +444,8 @@ void BaseDriver::Timer1HzCallbackCallback()
 void BaseDriver::CmdVelTimeout()
 {
     liner_tx_.set(.0, .0, .0);
+    // send cmd_vel to the robot
+    static Data_Format_Liner linertx;
+    linertx.EndianSwapSet(&liner_tx_);
+    stream->update_liner_speed(linertx);
 }
