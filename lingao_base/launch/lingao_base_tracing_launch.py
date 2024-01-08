@@ -13,7 +13,7 @@ def generate_launch_description():
         DeclareLaunchArgument('cmd_vel_sub_timeout', default_value='1000', description='The timeout of cmd_vel subscriber in ms.'),
         DeclareLaunchArgument('pub_odom_tf', default_value='false', description='Whether to publish odom tf.'),
         DeclareLaunchArgument('use_imu', default_value='true', description='Whether to use imu.'),
-        DeclareLaunchArgument('freq', default_value='50', description='Base loop frequency of odom and imu in HZ.'),
+        DeclareLaunchArgument('freq', default_value='100', description='Base loop frequency of odom and imu in HZ.'),
         DeclareLaunchArgument('imu_calibrate_gyro', default_value='True', description='Whether to calibrate gyro.'),
 
         Trace(session_name='lingao_base', events_kernel=[], ),  # Disable kernel tracing

@@ -34,7 +34,7 @@ def generate_launch_description():
         IncludeLaunchDescription(str(get_package_share_path('lingao_base')/ 'launch'/ 'lingao_base_launch.py'),
                                  launch_arguments={'use_imu': 'true',
                                                     'pub_odom_tf': pub_odom_tf,
-                                                    'freq': '10'}.items()),
+                                                    'freq': '100'}.items()),
         # Robot State Publisher
         Node(package="robot_state_publisher", executable="robot_state_publisher", output="both",
             parameters=[robot_description,{'use_sim_time': LaunchConfiguration('use_sim_time')}]),

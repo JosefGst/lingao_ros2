@@ -78,7 +78,7 @@ for localization only
 
 ## :robot: Navigation
 
-    ros2 launch lingao_nav lingao_nav_launch.py
+    ros2 launch lingao_nav lingao_nav_launch.py slam_params_file:=src/lingao_ros2/lingao_slam/config/localizer_params_online_async_home.yaml 
 
 :computer:
     

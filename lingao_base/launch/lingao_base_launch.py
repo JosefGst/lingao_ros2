@@ -11,7 +11,8 @@ def generate_launch_description():
         DeclareLaunchArgument('cmd_vel_sub_timeout', default_value='1000', description='The timeout of cmd_vel subscriber in ms.'),
         DeclareLaunchArgument('pub_odom_tf', default_value='false', description='Whether to publish odom tf.'),
         DeclareLaunchArgument('use_imu', default_value='true', description='Whether to use imu.'),
-        DeclareLaunchArgument('freq', default_value='50', description='Base loop frequency of odom and imu in HZ.'),
+        DeclareLaunchArgument('freq', default_value='100', description='Base loop frequency of odom and imu in HZ.'),
+        DeclareLaunchArgument('imu_calibrate_gyro', default_value='True', description='Whether to calibrate gyro.'),
 
         Node(name='lingao_base_node',
             package='lingao_base',
@@ -19,6 +20,7 @@ def generate_launch_description():
             parameters=[{'port_name': LaunchConfiguration('port_name')},
                         {'port_baud': LaunchConfiguration('port_baud')},
                         {'freq': LaunchConfiguration('freq')},
+                        {'imu_calibrate_gyro': LaunchConfiguration('imu_calibrate_gyro')},
                         {'name': 'topic_cmd_vel_name', 'description': 'The name of the topic for cmd_vel.',            'default_value': 'cmd_vel'},
                         {'name': 'publish_odom_name',  'description': 'The name of the topic for publishing odom.',    'default_value': 'odom'},
                         {'name': 'base_frame_id',      'description': 'The ID of the base frame.',                     'default_value': 'base_footprint'},
@@ -29,7 +31,6 @@ def generate_launch_description():
                         {'name': 'topic_imu',          'description': 'The name of the topic for imu.',                'default_value': 'imu'},
                         {'name': 'imu_frame_id',       'description': 'The ID of the imu frame.',                      'default_value': 'imu/data_raw'},
                         {'use_imu': LaunchConfiguration('use_imu')},
-                        {'name': 'imu_calibrate_gyro', 'description': 'Whether to calibrate gyro.',                    'default_value': True},
                         {'name': 'imu_calib_samples',  'description': 'The number of samples for gyro calibration.',   'default_value': 300},
             ]),
     ])
