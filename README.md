@@ -83,3 +83,12 @@ for localization only
 :computer:
     
     ros2 run rviz2 rviz2 -d ros2/lingao_ws/src/lingao_ros2/lingao_nav/config/nav.rviz 
+
+## TODO:
+- [ ] set init pose with SLAM Toolbox
+- [ ] use composition in NAV2
+- [ ] use GPS
+- [ ] enable Cossision Monitor
+- [ ] Dockerize
+- [ ] generally improve performance
+
