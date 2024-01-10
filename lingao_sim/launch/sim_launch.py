@@ -28,8 +28,11 @@ def generate_launch_description():
                                      description='Absolute path to rviz config file')
     robot_description = ParameterValue(Command(['xacro ', LaunchConfiguration('model')]),
                                        value_type=str)
+    headless = DeclareLaunchArgument(name='headless', default_value='False', choices=['True', 'False'],
+                                    description='Flag to enable Gazebo headless mode')
 
-    aws_warehouse = IncludeLaunchDescription(str(get_package_share_path("aws_robomaker_small_warehouse_world")/ "launch"/ "small_warehouse.launch.py"))
+    aws_warehouse = IncludeLaunchDescription(str(get_package_share_path("aws_robomaker_small_warehouse_world")/ "launch"/ "small_warehouse.launch.py"),
+                                             launch_arguments={'headless': LaunchConfiguration('headless')}.items())
 
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
@@ -73,6 +76,7 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
+        headless,
         aws_warehouse,
         DeclareLaunchArgument('open_rviz', default_value='False'),
 
