@@ -121,8 +121,8 @@ velocity_smoother:
     smoothing_frequency: 10.0  # Rate to run smoother
     scale_velocities: false  # scale velocities proportionally if any axis is outside of acceleration range to follow same vector, if possible
     feedback: "OPEN_LOOP"  # Type of feedback for current speed. Open loop uses the last smoothed output. Closed loop uses robot odometry
-    max_velocity: [0.5, 0.0, 1.0]  # Maximum velocities, ordered [Vx, Vy, Vw]
-    min_velocity: [-0.5, 0.0, -1.0]  # Minimum velocities, ordered [Vx, Vy, Vw]
+    max_velocity: [0.3, 0.0, 1.0]  # Maximum velocities, ordered [Vx, Vy, Vw]
+    min_velocity: [-0.3, 0.0, -1.0]  # Minimum velocities, ordered [Vx, Vy, Vw]
     deadband_velocity: [0.05, 0.05, 0.05]  # A deadband of velocities below which they should be zero-ed out for sending to the robot base controller, ordered [Vx, Vy, Vw]
     velocity_timeout: 1.0  # Time (s) after which if no new velocity commands are received to zero out and stop
     max_accel: [2.0, 0.0, 3.0]  # Maximum acceleration, ordered [Ax, Ay, Aw]
@@ -171,13 +171,13 @@ controller_server:
       simulate_ahead_time: 1.0
       # DWB parameters
       debug_trajectory_details: True
-      min_vel_x: -0.5
+      min_vel_x: -0.3
       min_vel_y: 0.0
-      max_vel_x: 0.5
+      max_vel_x: 0.3
       max_vel_y: 0.0
       max_vel_theta: 1.0
-      min_speed_xy: -0.5
-      max_speed_xy: 0.5
+      min_speed_xy: -0.3
+      max_speed_xy: 0.3
       min_speed_theta: 0.05
       # Add high threshold velocity for turtlebot 3 issue.
       # https://github.com/ROBOTIS-GIT/turtlebot3_simulations/issues/75
