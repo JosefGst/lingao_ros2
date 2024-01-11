@@ -42,7 +42,7 @@ For Gazebo simulation
 ![urdf](https://github.com/JosefGst/lingao_ros2/blob/humble/images/urdf.png)
 ## :computer: Sim
 
-    ros2 launch lingao_sim sim_launch.py
+    ros2 launch lingao_sim sim_launch.py gui:=false
 
 ![sim](https://github.com/JosefGst/lingao_ros2/blob/humble/images/sim.png)
 

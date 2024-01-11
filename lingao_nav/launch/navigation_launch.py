@@ -95,7 +95,7 @@ def generate_launch_description():
         description='Automatically startup the nav2 stack')
 
     declare_use_composition_cmd = DeclareLaunchArgument(
-        'use_composition', default_value='False',
+        'use_composition', default_value='True',
         description='Use composed bringup if True')
 
     declare_container_name_cmd = DeclareLaunchArgument(
@@ -196,7 +196,16 @@ def generate_launch_description():
                             {'node_names': lifecycle_nodes}]),
         ]
     )
-
+    component_manager = Node(
+            condition=IfCondition(use_composition),
+            name='nav2_container',
+            package='rclcpp_components',
+            executable='component_container_isolated',
+            parameters=[configured_params, {'autostart': autostart}],
+            arguments=['--ros-args', '--log-level', log_level],
+            remappings=remappings,
+            output='screen')
+    
     load_composable_nodes = LoadComposableNodes(
         condition=IfCondition(use_composition),
         target_container=container_name_full,
@@ -272,6 +281,7 @@ def generate_launch_description():
     ld.add_action(declare_use_respawn_cmd)
     ld.add_action(declare_log_level_cmd)
     # Add the actions to launch all of the navigation nodes
+    ld.add_action(component_manager)
     ld.add_action(load_nodes)
     ld.add_action(load_composable_nodes)
 
