@@ -51,6 +51,9 @@ def generate_launch_description():
         # GPS
         IncludeLaunchDescription(str(get_package_share_path('lingao_bringup')/ 'launch'/ 'gps'/ 'nmea_serial_driver_launch.py'),
                                 ),
+        # FOXGLOVE
+        IncludeLaunchDescription(str(get_package_share_path('foxglove_bridge')/ 'launch'/ 'foxglove_bridge_launch.xml'),
+                                ),
                                                          
         # Rviz2
         Node(

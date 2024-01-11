@@ -86,9 +86,9 @@ for localization only
 
 ## TODO:
 - [ ] set init pose with SLAM Toolbox
-- [ ] use composition in NAV2
+- [ ] use in bringup
 - [ ] use GPS
-- [ ] enable Cossision Monitor
+- [ ] enable Collision Monitor
 - [ ] Dockerize
 - [ ] generally improve performance
 
