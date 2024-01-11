@@ -84,6 +84,10 @@ for localization only
     
     ros2 run rviz2 rviz2 -d ros2/lingao_ws/src/lingao_ros2/lingao_nav/config/nav.rviz 
 
+or open Foxglove web https://studio.foxglove.dev/josef-gstoettner/view
+
+![foxglove](https://github.com/JosefGst/lingao_ros2/blob/humble/images/foxglove.png)
+
 ## TODO:
 - [ ] set init pose with SLAM Toolbox
 - [ ] use in bringup
