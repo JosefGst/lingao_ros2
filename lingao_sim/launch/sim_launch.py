@@ -1,11 +1,11 @@
 # from ament_index_python.packages import get_package_share_path
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, ExecuteProcess
+from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
 from launch.conditions import IfCondition, UnlessCondition
 from launch.substitutions import Command, LaunchConfiguration
-from ament_index_python.packages import get_package_share_path
+from ament_index_python.packages import get_package_share_path, get_package_share_directory
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 
@@ -17,8 +17,10 @@ import os
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     pkg_share = launch_ros.substitutions.FindPackageShare(package='lingao_description').find('lingao_description')
+    pkg_share = launch_ros.substitutions.FindPackageShare(package='lingao_description').find('lingao_description')
     default_model_path = os.path.join(pkg_share, 'urdf/MiniUGV_10A.xacro') 
     default_rviz_config_path = os.path.join(pkg_share, 'config/urdf.rviz')
+    aws_small_warehouse_dir = get_package_share_directory('aws_robomaker_small_warehouse_world')
 
     gui_arg = DeclareLaunchArgument(name='gui', default_value='false', choices=['true', 'false'],
                                     description='Flag to enable joint_state_publisher_gui')
@@ -28,11 +30,15 @@ def generate_launch_description():
                                      description='Absolute path to rviz config file')
     robot_description = ParameterValue(Command(['xacro ', LaunchConfiguration('model')]),
                                        value_type=str)
-    headless = DeclareLaunchArgument(name='headless', default_value='False', choices=['True', 'False'],
+    headless = DeclareLaunchArgument(name='headless', default_value='True', choices=['True', 'False'],
                                     description='Flag to enable Gazebo headless mode')
+    gazebo_params_path = DeclareLaunchArgument('gazebo_params_file',
+            default_value=os.path.join(aws_small_warehouse_dir, 'config', 'gazebo_params.yaml'),
+            description='Full path to the gazebo parameters file increase pub rate')
 
     aws_warehouse = IncludeLaunchDescription(str(get_package_share_path("aws_robomaker_small_warehouse_world")/ "launch"/ "small_warehouse.launch.py"),
-                                             launch_arguments={'headless': LaunchConfiguration('headless')}.items())
+                                             launch_arguments={'headless': LaunchConfiguration('headless'),
+                                                               'params_file': str(get_package_share_path('aws_robomaker_small_warehouse_world')/ 'config'/ 'gazebo_params.yaml')}.items())
 
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
@@ -44,16 +50,17 @@ def generate_launch_description():
     joint_state_publisher_node = Node(
         package='joint_state_publisher',
         executable='joint_state_publisher',
-        parameters=[{'use_sim_time': use_sim_time}],
-        condition=UnlessCondition(LaunchConfiguration('gui'))
+        parameters=[{'use_sim_time': use_sim_time,
+                    'rate': 50}],
+        # condition=UnlessCondition(LaunchConfiguration('gui'))
     )
 
-    joint_state_publisher_gui_node = Node(
-        package='joint_state_publisher_gui',
-        executable='joint_state_publisher_gui',
-        parameters=[{'use_sim_time': use_sim_time}],
-        condition=IfCondition(LaunchConfiguration('gui'))
-    )
+    # joint_state_publisher_gui_node = Node(
+    #     package='joint_state_publisher_gui',
+    #     executable='joint_state_publisher_gui',
+    #     parameters=[{'use_sim_time': use_sim_time}],
+    #     condition=IfCondition(LaunchConfiguration('gui'))
+    # )
 
     spawn_entity = launch_ros.actions.Node(
     	package='gazebo_ros', 
@@ -77,6 +84,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         headless,
+        gazebo_params_path,
         aws_warehouse,
         DeclareLaunchArgument('open_rviz', default_value='False'),
 
@@ -84,7 +92,7 @@ def generate_launch_description():
         gui_arg,
         model_arg,
         joint_state_publisher_node,
-        joint_state_publisher_gui_node,
+        # joint_state_publisher_gui_node,
         robot_state_publisher_node,
         spawn_entity,
         robot_launch,
