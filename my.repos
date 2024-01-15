@@ -7,10 +7,6 @@ repositories:
     type: git
     url: git@github.com:JosefGst/lingao_ros2.git
     version: master
-  src/slam_toolbox:
-    type: git
-    url: git@github.com:SteveMacenski/slam_toolbox.git
-    version: iron
   urdf_basic_shapes:
     type: git
     url: git@github.com:JosefGst/urdf_basic_shapes.git
