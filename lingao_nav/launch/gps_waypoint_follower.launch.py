@@ -26,7 +26,7 @@ from nav2_common.launch import RewrittenYaml
 
 def generate_launch_description():
     # Get the launch directory
-    bringup_dir = get_package_share_directory('nav2_bringup')
+    bringup_dir = get_package_share_directory('lingao_nav')
     gps_wpf_dir = get_package_share_directory(
         "lingao_nav")
     launch_dir = os.path.join(gps_wpf_dir, 'launch')

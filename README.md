@@ -2,6 +2,7 @@
 ![humble badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/humble.yaml/badge.svg)
 ![iron badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/iron.yaml/badge.svg)
 ![rolling badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/rolling.yaml/badge.svg)
+Developed in ROS Iron. Some features may not work in ROS Humble.
 
 ## Dependencies
 Install the [aws warehouse](https://github.com/aws-robotics/aws-robomaker-small-warehouse-world) in **aws_ws** and source it.
@@ -61,6 +62,14 @@ for localization only
     ros2 launch lingao_nav lingao_nav_launch.py use_sim_time:=true open_rviz:=true
 
 ![nav](https://github.com/JosefGst/lingao_ros2/blob/humble/images/nav.png)
+
+Navigate outdoors with GPS
+
+    ros2 launch lingao_bringup mapviz.launch.py 
+    ros2 launch lingao_nav gps_waypoint_follower.launch.py
+    ros2 run nav2_gps_waypoint_follower_demo interactive_waypoint_follower
+    ros2 run nav2_gps_waypoint_follower_demo gps_waypoint_logger
+    ros2 run nav2_gps_waypoint_follower_demo logged_waypoint_follower </path/to/yaml/file.yaml>
     
 ## :robot: Bringup
 
