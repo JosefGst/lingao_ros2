@@ -1,8 +1,28 @@
-# ROS 2
 ![humble badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/humble.yaml/badge.svg)
 ![iron badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/iron.yaml/badge.svg)
 ![rolling badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/rolling.yaml/badge.svg)
 Developed in ROS Iron. Some features may not work in ROS Humble.
+
+# Table of Content
+
+<details>
+<summary>Click to expand</summary>
+
+- [Table of Content](#table-of-content)
+  - [Dependencies](#dependencies)
+  - [Installation](#installation)
+- [:computer: Simulation](#computer-simulation)
+  - [:computer: Description](#computer-description)
+  - [:computer: Sim](#computer-sim)
+  - [:computer: SLAM](#computer-slam)
+  - [:computer: Navigation](#computer-navigation)
+    - [Navigate outdoors with GPS](#navigate-outdoors-with-gps)
+- [:robot: Real Robot](#robot-real-robot)
+  - [:robot: Bringup](#robot-bringup)
+  - [:robot: SLAM](#robot-slam)
+  - [:robot: Navigation](#robot-navigation)
+- [TODO:](#todo)
+</details>
 
 ## Dependencies
 Install the [aws warehouse](https://github.com/aws-robotics/aws-robomaker-small-warehouse-world) in **aws_ws** and source it.
@@ -32,6 +52,9 @@ Install the [aws warehouse](https://github.com/aws-robotics/aws-robomaker-small-
     rosdep update && rosdep install -i --from-path src --rosdistro $ROS_DISTRO -y
 
 and build the workspace.
+
+# :computer: Simulation
+
 ## :computer: Description
 
     ros2 launch urdf_launch display.launch.py urdf_package:=lingao_description urdf_package_path:=urdf/MiniUGV_10A.xacro
@@ -65,11 +88,20 @@ for localization only
 
 ### Navigate outdoors with GPS
 
+    ros2 launch lingao_sim emptyfarm_launch.py
+
+![emptyfarm](https://github.com/JosefGst/lingao_ros2/blob/humble/images/emptyfarm.png)
+
     ros2 launch lingao_bringup mapviz.launch.py 
+
+![emptyfarm](https://github.com/JosefGst/lingao_ros2/blob/humble/images/mapviz.png)
+
     ros2 launch lingao_nav gps_waypoint_follower.launch.py
     ros2 run nav2_gps_waypoint_follower_demo interactive_waypoint_follower
     ros2 run nav2_gps_waypoint_follower_demo gps_waypoint_logger
     ros2 run nav2_gps_waypoint_follower_demo logged_waypoint_follower </path/to/yaml/file.yaml>
+    
+# :robot: Real Robot
     
 ## :robot: Bringup
 
@@ -97,7 +129,7 @@ or open Foxglove web https://studio.foxglove.dev/josef-gstoettner/view
 
 ![foxglove](https://github.com/JosefGst/lingao_ros2/blob/humble/images/foxglove.png)
 
-## TODO:
+# TODO:
 - [ ] set init pose with SLAM Toolbox
 - [ ] use in bringup
 - [ ] use GPS

@@ -36,7 +36,9 @@ def generate_launch_description():
             default_value=os.path.join(aws_small_warehouse_dir, 'config', 'gazebo_params.yaml'),
             description='Full path to the gazebo parameters file increase pub rate')
 
-
+    gazebo_world = IncludeLaunchDescription(str(get_package_share_path('gazebo_worlds')/ 'launch'/ 'emptyfarm.launch.py'),
+                                            launch_arguments={'use_sim_time': use_sim_time}.items())
+    
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -82,6 +84,7 @@ def generate_launch_description():
     return LaunchDescription([
         headless,
         gazebo_params_path,
+        gazebo_world,
         DeclareLaunchArgument('open_rviz', default_value='False'),
 
         # ExecuteProcess(cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_init.so', '-s', 'libgazebo_ros_factory.so'], output='screen'),
