@@ -63,7 +63,7 @@ for localization only
 
 ![nav](https://github.com/JosefGst/lingao_ros2/blob/humble/images/nav.png)
 
-Navigate outdoors with GPS
+### Navigate outdoors with GPS
 
     ros2 launch lingao_bringup mapviz.launch.py 
     ros2 launch lingao_nav gps_waypoint_follower.launch.py
