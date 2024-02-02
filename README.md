@@ -16,7 +16,7 @@ Developed in ROS Iron. Some features may not work in ROS Humble.
   - [:computer: Sim](#computer-sim)
   - [:computer: SLAM](#computer-slam)
   - [:computer: Navigation](#computer-navigation)
-    - [Navigate outdoors with GPS](#navigate-outdoors-with-gps)
+    - [:computer: Navigate outdoors with GPS](#computer-navigate-outdoors-with-gps)
 - [:robot: Real Robot](#robot-real-robot)
   - [:robot: Bringup](#robot-bringup)
   - [:robot: SLAM](#robot-slam)
@@ -86,9 +86,9 @@ for localization only
 
 ![nav](https://github.com/JosefGst/lingao_ros2/blob/humble/images/nav.png)
 
-### Navigate outdoors with GPS
+### :computer: Navigate outdoors with GPS
 
-    ros2 launch lingao_sim emptyfarm_launch.py
+    ros2 launch lingao_sim emptyfarm_launch.py headless:=False
 
 ![emptyfarm](https://github.com/JosefGst/lingao_ros2/blob/humble/images/emptyfarm.png)
 
@@ -97,10 +97,13 @@ for localization only
 ![emptyfarm](https://github.com/JosefGst/lingao_ros2/blob/humble/images/mapviz.png)
 
     ros2 launch lingao_nav gps_waypoint_follower.launch.py
+
     ros2 run nav2_gps_waypoint_follower_demo interactive_waypoint_follower
     ros2 run nav2_gps_waypoint_follower_demo gps_waypoint_logger
     ros2 run nav2_gps_waypoint_follower_demo logged_waypoint_follower </path/to/yaml/file.yaml>
     
+![gps_navigation](https://github.com/JosefGst/lingao_ros2/blob/humble/gifs/gps_navigation.gif)
+
 # :robot: Real Robot
     
 ## :robot: Bringup
