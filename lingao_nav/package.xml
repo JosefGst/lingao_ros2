@@ -10,6 +10,7 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
   
   <depend>navigation2</depend>
+  <depend>nav2_bringup</depend>
   <depend>mapviz</depend>
   <depend>mapviz_plugins</depend>
   <depend>tile_map</depend>

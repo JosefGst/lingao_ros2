@@ -93,11 +93,7 @@ for localization only
 ![emptyfarm](https://github.com/JosefGst/lingao_ros2/blob/iron/images/emptyfarm.png)
 
     ros2 launch lingao_bringup mapviz.launch.py 
-
-![emptyfarm](https://github.com/JosefGst/lingao_ros2/blob/iron/images/mapviz.png)
-
     ros2 launch lingao_nav gps_waypoint_follower.launch.py
-
     ros2 run nav2_gps_waypoint_follower_demo interactive_waypoint_follower
     ros2 run nav2_gps_waypoint_follower_demo gps_waypoint_logger
     ros2 run nav2_gps_waypoint_follower_demo logged_waypoint_follower </path/to/yaml/file.yaml>
