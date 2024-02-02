@@ -3,10 +3,14 @@ repositories:
     type: git
     url: https://github.com/JosefGst/aws-robomaker-small-warehouse-world.git
     version: ros2
-  lingao_ros2:
+  gazebo_worlds:
     type: git
-    url: git@github.com:JosefGst/lingao_ros2.git
-    version: master
+    url: git@github.com:JosefGst/gazebo_worlds.git
+    version: main
+  slam_toolbox:
+    type: git
+    url: git@github.com:SteveMacenski/slam_toolbox.git
+    version: iron
   urdf_basic_shapes:
     type: git
     url: git@github.com:JosefGst/urdf_basic_shapes.git
@@ -15,3 +19,7 @@ repositories:
     type: git
     url: git@github.com:MetroRobots/urdf_launch.git
     version: main
+  navigation2_tutorials:
+    type: git
+    url: git@github.com:ros-planning/navigation2_tutorials.git
+    version: master
