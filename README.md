@@ -1,7 +1,7 @@
-![humble badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/humble.yaml/badge.svg)
+![iron badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/iron.yaml/badge.svg)
 ![iron badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/iron.yaml/badge.svg)
 ![rolling badge](https://github.com/JosefGst/lingao_ros2/actions/workflows/rolling.yaml/badge.svg)
-Developed in ROS Iron. Some features may not work in ROS Humble.
+Developed in ROS Iron. Some features may not work in ROS iron.
 
 # Table of Content
 
@@ -63,12 +63,12 @@ For Gazebo simulation
 
     ros2 launch lingao_description gazebo_launch.py open_rviz:=true
 
-![urdf](https://github.com/JosefGst/lingao_ros2/blob/humble/images/urdf.png)
+![urdf](https://github.com/JosefGst/lingao_ros2/blob/iron/images/urdf.png)
 ## :computer: Sim
 
     ros2 launch lingao_sim sim_launch.py gui:=false
 
-![sim](https://github.com/JosefGst/lingao_ros2/blob/humble/images/sim.png)
+![sim](https://github.com/JosefGst/lingao_ros2/blob/iron/images/sim.png)
 
 ## :computer: SLAM
 
@@ -78,23 +78,23 @@ for localization only
 
     ros2 launch lingao_slam slam_launch.py slam_params_file:=src/lingao_ros2/lingao_slam/config/localizer_params_online_async.yaml use_sim_time:=true
 
-![slam](https://github.com/JosefGst/lingao_ros2/blob/humble/images/slam.png)
+![slam](https://github.com/JosefGst/lingao_ros2/blob/iron/images/slam.png)
 
 ## :computer: Navigation
 
     ros2 launch lingao_nav lingao_nav_launch.py use_sim_time:=true open_rviz:=true
 
-![nav](https://github.com/JosefGst/lingao_ros2/blob/humble/images/nav.png)
+![nav](https://github.com/JosefGst/lingao_ros2/blob/iron/images/nav.png)
 
 ### :computer: Navigate outdoors with GPS
 
     ros2 launch lingao_sim emptyfarm_launch.py headless:=False
 
-![emptyfarm](https://github.com/JosefGst/lingao_ros2/blob/humble/images/emptyfarm.png)
+![emptyfarm](https://github.com/JosefGst/lingao_ros2/blob/iron/images/emptyfarm.png)
 
     ros2 launch lingao_bringup mapviz.launch.py 
 
-![emptyfarm](https://github.com/JosefGst/lingao_ros2/blob/humble/images/mapviz.png)
+![emptyfarm](https://github.com/JosefGst/lingao_ros2/blob/iron/images/mapviz.png)
 
     ros2 launch lingao_nav gps_waypoint_follower.launch.py
 
@@ -102,7 +102,7 @@ for localization only
     ros2 run nav2_gps_waypoint_follower_demo gps_waypoint_logger
     ros2 run nav2_gps_waypoint_follower_demo logged_waypoint_follower </path/to/yaml/file.yaml>
     
-![gps_navigation](https://github.com/JosefGst/lingao_ros2/blob/humble/gifs/gps_navigation.gif)
+![gps_navigation](https://github.com/JosefGst/lingao_ros2/blob/iron/gifs/gps_navigation.gif)
 
 # :robot: Real Robot
     
@@ -118,7 +118,7 @@ for localization only
 
     ros2 run rviz2 rviz2 -d ros2/lingao_ws/src/lingao_ros2/lingao_slam/config/slam.rviz
 
-![nav](https://github.com/JosefGst/lingao_ros2/blob/humble/images/home.png)
+![nav](https://github.com/JosefGst/lingao_ros2/blob/iron/images/home.png)
 
 ## :robot: Navigation
 
@@ -130,7 +130,7 @@ for localization only
 
 or open Foxglove web https://studio.foxglove.dev/josef-gstoettner/view
 
-![foxglove](https://github.com/JosefGst/lingao_ros2/blob/humble/images/foxglove.png)
+![foxglove](https://github.com/JosefGst/lingao_ros2/blob/iron/images/foxglove.png)
 
 # TODO:
 - [ ] set init pose with SLAM Toolbox
