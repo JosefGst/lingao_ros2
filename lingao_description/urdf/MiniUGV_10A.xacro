@@ -22,7 +22,7 @@
             <geometry>
                 <!-- <box size="${base_length} ${base_width} ${base_height}" /> -->
                 <mesh
-                    filename="file://$(find lingao_description)/meshes/LA_MiniUGV_10A/mobile_base.stl"
+                    filename="file://$(find lingao_description)/meshes/LA_MiniUGV_10A/base.dae"
                     scale="1 1 1" />
             </geometry>
             <material name="yellow">
@@ -38,8 +38,8 @@
         <xacro:solid_cuboid_inertia m="${base_mass}" h="${base_height}" d="${base_length}"
             w="${base_width}" />
     </link>
-    <xacro:gazebo_params name="base_link" rgb="Yellow"
-        friction="${sliding_friction}" />
+    <!-- <xacro:gazebo_params name="base_link" rgb="Yellow"
+        friction="${sliding_friction}" /> -->
 
     <link name="base_footprint" />
 
