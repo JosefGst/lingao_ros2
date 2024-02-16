@@ -59,11 +59,11 @@ and build the workspace.
 
     ros2 launch urdf_launch display.launch.py urdf_package:=lingao_description urdf_package_path:=urdf/MiniUGV_10A.xacro
 
-For Gazebo simulation
+<!-- For Gazebo simulation
 
     ros2 launch lingao_description gazebo_launch.py open_rviz:=true
 
-![urdf](https://github.com/JosefGst/lingao_ros2/blob/iron/images/urdf.png)
+![urdf](https://github.com/JosefGst/lingao_ros2/blob/iron/images/urdf.png) -->
 ## :computer: Sim
 
     ros2 launch lingao_sim sim_launch.py gui:=false
