@@ -64,7 +64,7 @@
                 <geometry>
                     <!-- <cylinder length="${wheel_length}" radius="${wheel_radius}" /> -->
                     <mesh
-                        filename="file://$(find lingao_description)/meshes/LA_MiniUGV_10A/mobile_whell.stl" />
+                        filename="file://$(find lingao_description)/meshes/LA_MiniUGV_10A/wheel.dae" />
                 </geometry>
                 <material name="Poppy">
                     <color rgba="0.4 0.4039 0.42745098 1.0" />
@@ -85,8 +85,15 @@
                     izz="${(2/5) * mass * (wheel_radius * wheel_radius)}" />
             </inertial>
         </link>
-        <xacro:gazebo_params name="${link_name}_wheel_link" rgb="Grey"
-            friction="${sliding_friction}" />
+        <gazebo reference="${link_name}_wheel_link">
+            <mu1>0.001</mu1>
+            <mu2>0.001</mu2>
+            <kp>500000.0</kp>
+            <kd>10.0</kd>
+            <minDepth>0.001</minDepth>
+            <maxVel>0.1</maxVel>
+            <fdir1>1 0 0</fdir1>
+        </gazebo>
 
         <joint name="${link_name}_wheel" type="continuous">
             <parent link="${parent_link}" />
